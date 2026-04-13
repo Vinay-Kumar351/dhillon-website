@@ -1,0 +1,2383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Dhillon Interactive — Independent Game Development & Software Publishing Studio." />
+  <meta name="author" content="Dhillon Interactive" />
+  <meta property="og:title" content="Dhillon Interactive — Crafting Immersive Digital Experiences" />
+  <meta property="og:url" content="https://dhillon-interactive.com" />
+  <meta property="og:type" content="website" />
+  <title>Dhillon Interactive | Game Development & Software Studio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ══════════════════════════════════════════
+       TOKENS
+    ══════════════════════════════════════════ */
+    :root {
+      --cobalt:        #1a3fca;
+      --cobalt-deep:   #0f2a9e;
+      --cobalt-light:  #2d55e0;
+      --cobalt-xl:     #4f72f0;
+      --cobalt-pale:   #e8edfb;
+      --cobalt-pale2:  #d0d8f7;
+      --gold:          #f59e0b;
+      --gold-lt:       #fbbf24;
+      --gold-pale:     #fef3c7;
+      --emerald:       #10b981;
+      --em-pale:       #d1fae5;
+      --rose:          #f43f5e;
+
+      --bg-root:       #f5f6fa;
+      --bg-white:      #ffffff;
+      --bg-soft:       #f0f2f8;
+      --bg-card:       #ffffff;
+      --bg-navy:       #0b1120;
+      --bg-navy-mid:   #0f1a32;
+
+      --tx-head:       #0b1120;
+      --tx-body:       #374151;
+      --tx-sec:        #6b7280;
+      --tx-muted:      #9ca3af;
+      --tx-white:      #ffffff;
+      --tx-wmuted:     #cbd5e1;
+
+      --border:        #e2e8f0;
+      --border-mid:    #c7d2e8;
+
+      --sh-sm:  0 1px 3px rgba(11,17,32,.08),0 1px 2px rgba(11,17,32,.05);
+      --sh-md:  0 4px 16px rgba(11,17,32,.10),0 2px 6px rgba(11,17,32,.06);
+      --sh-lg:  0 12px 40px rgba(11,17,32,.13),0 4px 14px rgba(11,17,32,.07);
+      --sh-xl:  0 24px 64px rgba(11,17,32,.16),0 8px 24px rgba(11,17,32,.08);
+      --sh-cob: 0 8px 32px rgba(26,63,202,.22);
+      --sh-cob-lg: 0 16px 48px rgba(26,63,202,.32);
+      --sh-gold: 0 8px 32px rgba(245,158,11,.28);
+
+      --nav-h:   70px;
+      --r-sm:    8px;
+      --r:       12px;
+      --r-lg:    20px;
+      --r-xl:    28px;
+      --r-pill:  999px;
+
+      --ease:    cubic-bezier(.4,0,.2,1);
+      --spring:  cubic-bezier(.34,1.56,.64,1);
+      --tf:      .18s;
+      --tm:      .32s;
+
+      --ff-body: 'Plus Jakarta Sans', sans-serif;
+      --ff-disp: 'Bebas Neue', sans-serif;
+      --ff-head: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* ══════════════════════════════════════════
+       RESET
+    ══════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: var(--ff-body);
+      background: var(--bg-root);
+      color: var(--tx-body);
+      line-height: 1.7;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a  { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img, video { max-width: 100%; display: block; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+    input, textarea { font-family: inherit; }
+    ::selection { background: var(--cobalt-pale2); color: var(--cobalt-deep); }
+
+    ::-webkit-scrollbar        { width: 5px; }
+    ::-webkit-scrollbar-track  { background: var(--bg-soft); }
+    ::-webkit-scrollbar-thumb  { background: var(--cobalt-light); border-radius: 3px; }
+
+    /* ══════════════════════════════════════════
+       LAYOUT
+    ══════════════════════════════════════════ */
+    .wrap {
+      width: 100%;
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    .sec    { padding: 100px 0; }
+    .sec-sm { padding: 60px 0; }
+
+    /* ══════════════════════════════════════════
+       TYPE UTILS
+    ══════════════════════════════════════════ */
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--cobalt);
+      background: var(--cobalt-pale);
+      border: 1.5px solid var(--cobalt-pale2);
+      padding: 6px 14px;
+      border-radius: var(--r-pill);
+      margin-bottom: 20px;
+    }
+    .eyebrow.gold  { color:#92600a; background:var(--gold-pale); border-color:#fde68a; }
+    .eyebrow.white { color:rgba(255,255,255,.9); background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.2); }
+
+    .display-title {
+      font-family: var(--ff-disp);
+      font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -.03em;
+      color: var(--tx-head);
+    }
+    .display-title .grad {
+      background: linear-gradient(135deg, var(--cobalt) 0%, var(--cobalt-xl) 60%, #7c9ef8 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .display-title .grad-gold {
+      background: linear-gradient(135deg, #d97706, var(--gold-lt));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .body-lg { font-size: 1.05rem; color: var(--tx-sec); line-height: 1.85; }
+
+    /* ══════════════════════════════════════════
+       BUTTONS
+    ══════════════════════════════════════════ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      font-size: .9rem;
+      font-weight: 600;
+      border-radius: var(--r);
+      padding: 13px 26px;
+      transition: all var(--tm) var(--ease);
+      white-space: nowrap;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .btn-cobalt {
+      background: linear-gradient(135deg, var(--cobalt), var(--cobalt-light));
+      color: #fff;
+      box-shadow: var(--sh-cob);
+    }
+    .btn-cobalt:hover { transform: translateY(-2px); box-shadow: var(--sh-cob-lg); }
+    .btn-cobalt::before {
+      content: '';
+      position: absolute;
+      top:0; left:-100%;
+      width:60%; height:100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent);
+      transition: left .5s ease;
+    }
+    .btn-cobalt:hover::before { left:160%; }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #d97706, var(--gold-lt));
+      color: #fff;
+      box-shadow: var(--sh-gold);
+    }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 20px 60px rgba(245,158,11,.4); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--cobalt);
+      border: 2px solid var(--cobalt-pale2);
+    }
+    .btn-outline:hover { border-color: var(--cobalt-light); background: var(--cobalt-pale); transform: translateY(-2px); }
+
+    .btn-ghost-white {
+      background: rgba(255,255,255,.12);
+      color: #fff;
+      border: 1.5px solid rgba(255,255,255,.2);
+      backdrop-filter: blur(8px);
+    }
+    .btn-ghost-white:hover { background: rgba(255,255,255,.22); transform: translateY(-2px); }
+
+    .btn-lg { padding: 15px 32px; font-size: .98rem; border-radius: var(--r-lg); }
+    .btn-sm { padding: 9px 18px; font-size: .8rem; border-radius: var(--r-sm); }
+
+    /* ══════════════════════════════════════════
+       NAVBAR
+    ══════════════════════════════════════════ */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 900;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      width: 100%;
+      transition: background var(--tm) var(--ease), box-shadow var(--tm) var(--ease);
+    }
+    .navbar.scrolled {
+      background: rgba(255,255,255,.93);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 30px rgba(11,17,32,.08);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-family: var(--ff-disp);
+      font-weight: 800;
+      font-size: 1.18rem;
+      color: var(--tx-head);
+      z-index: 901;
+    }
+    .logo:hover { opacity: .88; }
+    .logo-mark {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, var(--cobalt), var(--cobalt-xl));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 1rem; flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(26,63,202,.35);
+      transition: transform var(--tm) var(--spring);
+    }
+    .logo:hover .logo-mark { transform: rotate(-6deg) scale(1.08); }
+    .logo em { font-style: normal; background: linear-gradient(135deg,var(--cobalt),var(--cobalt-xl)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+    .nav-links { display: flex; align-items: center; gap: 2px; }
+    .nav-links a {
+      font-size: .88rem; font-weight: 500;
+      color: var(--tx-sec);
+      padding: 8px 14px;
+      border-radius: var(--r-sm);
+      transition: all var(--tf) var(--ease);
+    }
+    .nav-links a:hover { color: var(--tx-head); background: var(--bg-soft); }
+    .nav-links a.nav-active { color: var(--cobalt); font-weight: 600; }
+    .nav-pill {
+      margin-left: 8px;
+      background: linear-gradient(135deg, var(--cobalt), var(--cobalt-light)) !important;
+      color: #fff !important;
+      padding: 9px 20px !important;
+      border-radius: var(--r) !important;
+      font-weight: 600 !important;
+      box-shadow: var(--sh-cob) !important;
+    }
+    .nav-pill:hover { transform: translateY(-1px); box-shadow: var(--sh-cob-lg) !important; }
+
+    /* hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      padding: 8px;
+      border-radius: var(--r-sm);
+      cursor: pointer;
+      z-index: 901;
+      transition: background var(--tf);
+    }
+    .hamburger:hover { background: var(--bg-soft); }
+    .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--tx-head); border-radius: 2px;
+      transition: all var(--tm) var(--ease);
+      transform-origin: center;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* mobile drawer */
+    .mobile-drawer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 899;
+      background: rgba(255,255,255,.97);
+      backdrop-filter: blur(24px);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      opacity: 0;
+      transform: scale(.96) translateY(-8px);
+      transition: opacity var(--tm) var(--ease), transform var(--tm) var(--ease);
+      pointer-events: none;
+    }
+    .mobile-drawer.open { opacity:1; transform:scale(1) translateY(0); pointer-events:all; }
+    .mobile-drawer a {
+      font-family: var(--ff-disp);
+      font-size: 1.7rem; font-weight: 800;
+      color: var(--tx-sec);
+      padding: 12px 40px;
+      border-radius: var(--r-lg);
+      transition: all var(--tf);
+      text-align: center;
+    }
+    .mobile-drawer a:hover { color: var(--cobalt); background: var(--cobalt-pale); }
+
+    /* ══════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      padding-top: var(--nav-h);
+      background: var(--bg-white);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-blob {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(80px);
+    }
+    .hero-blob-1 {
+      width: 700px; height: 700px;
+      top: -200px; right: -180px;
+      background: radial-gradient(circle, rgba(99,130,248,.22) 0%, rgba(26,63,202,.06) 60%, transparent 80%);
+      opacity: .6;
+    }
+    .hero-blob-2 {
+      width: 500px; height: 500px;
+      bottom: -150px; left: -120px;
+      background: radial-gradient(circle, rgba(245,158,11,.1) 0%, transparent 70%);
+      opacity: .7;
+    }
+    .hero-grid-pat {
+      position: absolute; inset: 0;
+      opacity: .03;
+      background-image: linear-gradient(var(--cobalt) 1px, transparent 1px),
+                        linear-gradient(90deg, var(--cobalt) 1px, transparent 1px);
+      background-size: 52px 52px;
+      pointer-events: none;
+    }
+    .hero .wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+      padding-top: 56px;
+      padding-bottom: 56px;
+    }
+
+    /* hero left */
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .74rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--cobalt);
+      background: var(--cobalt-pale);
+      border: 1.5px solid var(--cobalt-pale2);
+      padding: 7px 16px; border-radius: var(--r-pill);
+      margin-bottom: 28px;
+      animation: slideDown .7s var(--ease) both;
+    }
+    .pulse-dot {
+      width: 7px; height: 7px;
+      background: var(--emerald);
+      border-radius: 50%;
+      animation: pulseGreen 2s infinite;
+    }
+    @keyframes pulseGreen {
+      0%,100% { box-shadow: 0 0 0 0 rgba(16,185,129,.5); }
+      50%      { box-shadow: 0 0 0 5px rgba(16,185,129,0); }
+    }
+    .hero-h1 {
+      font-family: var(--ff-disp);
+      font-size: clamp(2.8rem, 5.5vw, 4.6rem);
+      font-weight: 800;
+      line-height: 1.07;
+      letter-spacing: -.04em;
+      color: var(--tx-head);
+      margin-bottom: 24px;
+      animation: slideUp .8s var(--ease) .1s both;
+    }
+    .hero-h1 .word-grad {
+      background: linear-gradient(135deg, var(--cobalt-deep) 0%, var(--cobalt-light) 50%, var(--cobalt-xl) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-h1 .word-outline { -webkit-text-stroke: 2.5px var(--cobalt); color: transparent; }
+    .hero-sub {
+      font-size: 1.08rem; color: var(--tx-sec);
+      line-height: 1.85; max-width: 500px;
+      margin-bottom: 38px;
+      animation: slideUp .8s var(--ease) .2s both;
+    }
+    .hero-sub strong { color: var(--tx-head); font-weight: 600; }
+    .hero-actions {
+      display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+      animation: slideUp .8s var(--ease) .3s both;
+    }
+    .hero-trust {
+      display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+      margin-top: 48px; padding-top: 32px;
+      border-top: 1.5px solid var(--border);
+      animation: slideUp .8s var(--ease) .4s both;
+    }
+    .trust-item { display: flex; align-items: center; gap: 10px; }
+    .trust-ico {
+      width: 38px; height: 38px;
+      background: var(--cobalt-pale);
+      border: 1.5px solid var(--cobalt-pale2);
+      border-radius: var(--r-sm);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--cobalt); font-size: .85rem; flex-shrink: 0;
+    }
+    .t-val { font-family: var(--ff-disp); font-size: .98rem; font-weight: 800; color: var(--tx-head); line-height: 1; }
+    .t-lbl { font-size: .7rem; color: var(--tx-muted); margin-top: 2px; }
+    .trust-sep { width: 1.5px; height: 32px; background: var(--border); }
+
+    /* hero right */
+    .hero-rhs {
+      position: relative;
+      animation: slideRight .9s var(--ease) .15s both;
+    }
+    .hero-float-card {
+      background: var(--bg-white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-xl);
+      box-shadow: var(--sh-xl);
+      overflow: hidden;
+    }
+    .hfc-banner {
+      width: 100%; height: 210px;
+      background: linear-gradient(135deg, #0b1120 0%, #0f2357 30%, #1a3fca 65%, #4f72f0 100%);
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .hfc-banner-glow1 {
+      position:absolute; width:240px; height:240px; border-radius:50%;
+      background:radial-gradient(circle,rgba(79,114,240,.5) 0%,transparent 70%);
+      top:-60px; right:-40px;
+    }
+    .hfc-banner-glow2 {
+      position:absolute; width:160px; height:160px; border-radius:50%;
+      background:radial-gradient(circle,rgba(245,158,11,.25) 0%,transparent 70%);
+      bottom:-40px; left:20px;
+    }
+    .hfc-grid-pat {
+      position:absolute; inset:0; opacity:.06;
+      background-image: linear-gradient(rgba(255,255,255,.9) 1px,transparent 1px),
+                        linear-gradient(90deg,rgba(255,255,255,.9) 1px,transparent 1px);
+      background-size:32px 32px;
+    }
+    .hfc-icon { font-size:5.5rem; position:relative; z-index:1; filter:drop-shadow(0 8px 24px rgba(0,0,0,.4)); animation: floatIcon 4s ease-in-out infinite; }
+    @keyframes floatIcon { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+
+    .hfc-status {
+      position:absolute; top:14px; left:14px; z-index:2;
+      display:flex; align-items:center; gap:6px;
+      font-size:.68rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+      color:rgba(255,255,255,.95);
+      background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.18);
+      padding:5px 12px; border-radius:var(--r-pill); backdrop-filter:blur(8px);
+    }
+    .hfc-status .sd { width:6px; height:6px; background:var(--gold-lt); border-radius:50%; animation:pulseGold 2s infinite; }
+    @keyframes pulseGold {
+      0%,100%{box-shadow:0 0 0 0 rgba(251,191,36,.5)}
+      50%{box-shadow:0 0 0 5px rgba(251,191,36,0)}
+    }
+    .hfc-plats { position:absolute; top:14px; right:14px; z-index:2; display:flex; gap:5px; }
+    .hfc-plats span {
+      font-size:.63rem; font-weight:700; color:rgba(255,255,255,.88);
+      background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.15);
+      padding:4px 9px; border-radius:5px; backdrop-filter:blur(6px);
+    }
+    .hfc-body { padding: 22px; }
+    .hfc-genre { font-size:.7rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--cobalt-light); margin-bottom:5px; }
+    .hfc-title { font-family:var(--ff-disp); font-size:1.5rem; font-weight:800; color:var(--tx-head); letter-spacing:-.03em; margin-bottom:5px; }
+    .hfc-desc  { font-size:.82rem; color:var(--tx-sec); line-height:1.6; margin-bottom:16px; }
+    .hfc-tags  { display:flex; gap:7px; flex-wrap:wrap; margin-bottom:18px; }
+    .hfc-tag   { font-size:.68rem; font-weight:600; color:var(--cobalt); background:var(--cobalt-pale); border:1px solid var(--cobalt-pale2); padding:4px 10px; border-radius:var(--r-sm); }
+    .hfc-prog-wrap { margin-bottom:16px; }
+    .hfc-prog-top { display:flex; justify-content:space-between; margin-bottom:7px; }
+    .hfc-prog-top span { font-size:.73rem; color:var(--tx-muted); font-weight:500; }
+    .hfc-prog-top strong { font-size:.76rem; font-weight:700; color:var(--cobalt); }
+    .hfc-bar { height:6px; background:var(--bg-soft); border-radius:3px; overflow:hidden; }
+    .hfc-bar-fill { height:100%; border-radius:3px; background:linear-gradient(90deg,var(--cobalt),var(--cobalt-xl)); width:0%; transition:width 1.6s var(--ease); }
+    .hfc-foot { display:flex; align-items:center; justify-content:space-between; padding-top:16px; border-top:1.5px solid var(--border); }
+    .hfc-meta { display:flex; gap:14px; }
+    .hfc-meta-item { text-align:center; }
+    .hfc-meta-val { font-family:var(--ff-disp); font-size:1.05rem; font-weight:800; color:var(--tx-head); line-height:1; }
+    .hfc-meta-lbl { font-size:.62rem; color:var(--tx-muted); text-transform:uppercase; letter-spacing:.07em; margin-top:2px; }
+
+    /* float badges */
+    .float-badge {
+      position:absolute;
+      background:var(--bg-white); border:1.5px solid var(--border);
+      border-radius:var(--r-lg); box-shadow:var(--sh-lg);
+      padding:12px 16px;
+      display:flex; align-items:center; gap:10px;
+      font-size:.78rem; font-weight:600; color:var(--tx-head);
+      white-space:nowrap; z-index:3;
+    }
+    .fb-tl { top:-22px; left:-28px; animation:floatA 5s ease-in-out infinite; }
+    .fb-br { bottom:-20px; right:-24px; animation:floatB 6s ease-in-out infinite; }
+    @keyframes floatA { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-8px) rotate(1deg)} }
+    @keyframes floatB { 0%,100%{transform:translateY(0) rotate(1deg)} 50%{transform:translateY(-10px) rotate(-1deg)} }
+    .fb-ico {
+      width:32px; height:32px; border-radius:8px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:.85rem; flex-shrink:0;
+    }
+    .fb-ico.cob  { background:linear-gradient(135deg,var(--cobalt),var(--cobalt-xl)); color:#fff; }
+    .fb-ico.gold { background:linear-gradient(135deg,#d97706,var(--gold-lt)); color:#fff; }
+
+    /* ══════════════════════════════════════════
+       MARQUEE
+    ══════════════════════════════════════════ */
+    .marquee-strip {
+      background: var(--bg-navy);
+      padding: 18px 0;
+      overflow: hidden;
+      width: 100%;
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marqueeScroll 30s linear infinite;
+    }
+    @keyframes marqueeScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    .marquee-item {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 0 28px;
+      font-size: .76rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      color: rgba(255,255,255,.38); white-space: nowrap;
+    }
+    .marquee-dot { width:4px; height:4px; border-radius:50%; background:var(--cobalt-xl); opacity:.6; }
+
+    /* ══════════════════════════════════════════
+       ABOUT
+    ══════════════════════════════════════════ */
+    .about {
+      background: var(--bg-white);
+      border-top: 1.5px solid var(--border);
+      width: 100%;
+    }
+    .about .wrap {
+      display: grid;
+      grid-template-columns: 1fr 1.05fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .body-lg strong { color: var(--tx-head); font-weight: 600; }
+    .body-lg { margin-bottom: 16px; }
+
+    .pillar-list { margin-top: 32px; display:flex; flex-direction:column; gap:10px; }
+    .pillar {
+      display:flex; align-items:flex-start; gap:14px;
+      padding:15px 18px;
+      background:var(--bg-soft); border:1.5px solid var(--border); border-radius:var(--r);
+      transition:all var(--tm) var(--ease); cursor:default;
+    }
+    .pillar:hover { border-color:var(--cobalt-pale2); background:var(--cobalt-pale); transform:translateX(5px); box-shadow:var(--sh-md); }
+    .pillar-ico {
+      width:40px; height:40px;
+      background:linear-gradient(135deg,var(--cobalt),var(--cobalt-xl));
+      border-radius:var(--r-sm); display:flex; align-items:center; justify-content:center;
+      color:#fff; font-size:.9rem; flex-shrink:0;
+      box-shadow:0 4px 12px rgba(26,63,202,.3);
+    }
+    .pillar-title { font-size:.9rem; font-weight:700; color:var(--tx-head); margin-bottom:2px; }
+    .pillar-desc  { font-size:.79rem; color:var(--tx-sec); }
+
+    .about-visual { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .av-card {
+      background:var(--bg-white); border:1.5px solid var(--border);
+      border-radius:var(--r-lg); padding:24px 20px;
+      transition:all var(--tm) var(--ease); position:relative; overflow:hidden;
+    }
+    .av-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:3px;
+      background:linear-gradient(90deg,var(--cobalt),var(--cobalt-xl));
+      transform:scaleX(0); transform-origin:left; transition:transform var(--tm) var(--ease);
+    }
+    .av-card:hover::before { transform:scaleX(1); }
+    .av-card:hover { box-shadow:var(--sh-lg); border-color:var(--cobalt-pale2); transform:translateY(-4px); }
+    .av-card.span2 {
+      grid-column:span 2; display:flex; align-items:center; gap:18px;
+      background:linear-gradient(135deg,var(--cobalt-pale) 0%,var(--bg-white) 100%);
+      border-color:var(--cobalt-pale2);
+    }
+    .av-card.span2::before { display:none; }
+    .av-emoji { font-size:2rem; margin-bottom:11px; display:block; }
+    .av-card.span2 .av-emoji { font-size:2.6rem; margin-bottom:0; flex-shrink:0; }
+    .av-title { font-family:var(--ff-disp); font-size:.93rem; font-weight:800; color:var(--tx-head); margin-bottom:5px; }
+    .av-text  { font-size:.79rem; color:var(--tx-sec); line-height:1.6; }
+    .av-stat  { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; background:linear-gradient(135deg,var(--cobalt-pale),#e0e8ff); border-color:var(--cobalt-pale2); }
+    .av-number { font-family:var(--ff-disp); font-size:2.3rem; font-weight:800; color:var(--cobalt); line-height:1; margin-bottom:5px; }
+    .av-label  { font-size:.73rem; color:var(--cobalt-light); font-weight:600; }
+
+    /* ══════════════════════════════════════════
+       SERVICES
+    ══════════════════════════════════════════ */
+    .services { background:var(--bg-root); border-top:1.5px solid var(--border); width:100%; }
+    .services-hdr { text-align:center; max-width:620px; margin:0 auto 60px; }
+    .services-hdr .display-title { margin-bottom:14px; }
+
+    .services-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .svc-card {
+      background:var(--bg-white); border:1.5px solid var(--border);
+      border-radius:var(--r-lg); padding:30px 26px;
+      transition:all var(--tm) var(--ease); box-shadow:var(--sh-sm);
+      position:relative; overflow:hidden;
+    }
+    .svc-card:hover { box-shadow:var(--sh-xl); transform:translateY(-5px); border-color:var(--cobalt-pale2); }
+    .svc-ico {
+      width:52px; height:52px; border-radius:var(--r);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.25rem; margin-bottom:18px;
+    }
+    .ico-cobalt  { background:linear-gradient(135deg,var(--cobalt),var(--cobalt-xl)); color:#fff; box-shadow:0 6px 20px rgba(26,63,202,.3); }
+    .ico-gold    { background:linear-gradient(135deg,#d97706,var(--gold-lt)); color:#fff; box-shadow:0 6px 20px rgba(245,158,11,.3); }
+    .ico-emerald { background:linear-gradient(135deg,#059669,var(--emerald)); color:#fff; box-shadow:0 6px 20px rgba(16,185,129,.3); }
+    .ico-violet  { background:linear-gradient(135deg,#7c3aed,#a78bfa); color:#fff; box-shadow:0 6px 20px rgba(124,58,237,.3); }
+    .ico-rose    { background:linear-gradient(135deg,#e11d48,var(--rose)); color:#fff; box-shadow:0 6px 20px rgba(244,63,94,.3); }
+    .ico-sky     { background:linear-gradient(135deg,#0284c7,#38bdf8); color:#fff; box-shadow:0 6px 20px rgba(2,132,199,.3); }
+    .svc-title { font-family:var(--ff-disp); font-size:1.05rem; font-weight:800; color:var(--tx-head); margin-bottom:9px; letter-spacing:-.02em; }
+    .svc-desc  { font-size:.84rem; color:var(--tx-sec); line-height:1.72; }
+    .svc-tags  { display:flex; flex-wrap:wrap; gap:7px; margin-top:16px; }
+    .svc-tag   { font-size:.68rem; font-weight:600; padding:4px 9px; border-radius:5px; }
+    .tag-cob   { color:var(--cobalt); background:var(--cobalt-pale); border:1px solid var(--cobalt-pale2); }
+    .tag-gold  { color:#92600a; background:var(--gold-pale); border:1px solid #fde68a; }
+
+    /* ══════════════════════════════════════════
+       GAMES
+    ══════════════════════════════════════════ */
+    .games-sec { background:var(--bg-white); border-top:1.5px solid var(--border); width:100%; }
+    .games-hdr {
+      display:flex; align-items:flex-end; justify-content:space-between;
+      margin-bottom:52px; gap:24px; flex-wrap:wrap;
+    }
+    .games-grid { display:grid; grid-template-columns:1.1fr .9fr; gap:22px; align-items:start; }
+
+    /* main game card */
+    .gmc {
+      background:var(--bg-white); border:1.5px solid var(--border);
+      border-radius:var(--r-xl); overflow:hidden;
+      box-shadow:var(--sh-md); transition:all var(--tm) var(--ease);
+    }
+    .gmc:hover { box-shadow:var(--sh-xl); transform:translateY(-5px); }
+    .gmc-banner {
+      width:100%; height:270px;
+      background:linear-gradient(135deg,#060c1e 0%,#0a1a3a 25%,#1133a0 55%,#2d55e0 80%,#4f72f0 100%);
+      position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden;
+    }
+    .gmc-banner-glow1 { position:absolute; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(79,114,240,.5) 0%,transparent 70%); top:-80px; right:-60px; }
+    .gmc-banner-glow2 { position:absolute; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle,rgba(245,158,11,.25) 0%,transparent 70%); bottom:-50px; left:30px; }
+    .gmc-banner-grid  { position:absolute; inset:0; opacity:.06; background-image:linear-gradient(rgba(255,255,255,.8) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.8) 1px,transparent 1px); background-size:38px 38px; }
+    .gmc-icon { font-size:7rem; position:relative; z-index:1; filter:drop-shadow(0 12px 32px rgba(0,0,0,.5)); animation:floatIcon 4.5s ease-in-out infinite; }
+    .gmc-badge-tl {
+      position:absolute; top:16px; left:16px; z-index:2;
+      font-size:.67rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
+      color:var(--gold-lt); background:rgba(245,158,11,.15); border:1.5px solid rgba(245,158,11,.35);
+      padding:5px 12px; border-radius:var(--r-pill); backdrop-filter:blur(8px);
+      display:flex; align-items:center; gap:6px;
+    }
+    .gmc-badge-tl .gd { width:6px; height:6px; border-radius:50%; background:var(--gold-lt); }
+    .gmc-plats-tr { position:absolute; top:16px; right:16px; z-index:2; display:flex; gap:5px; }
+    .gmc-plat { font-size:.63rem; font-weight:700; color:rgba(255,255,255,.9); background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); padding:4px 10px; border-radius:5px; backdrop-filter:blur(6px); }
+    .gmc-body { padding:26px; }
+    .gmc-genre { font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--cobalt-light); margin-bottom:7px; display:flex; align-items:center; gap:7px; }
+    .gmc-genre::before { content:''; display:inline-block; width:14px; height:2px; background:var(--cobalt-xl); border-radius:1px; }
+    .gmc-title { font-family:var(--ff-disp); font-size:1.9rem; font-weight:800; color:var(--tx-head); letter-spacing:-.04em; margin-bottom:11px; line-height:1.05; }
+    .gmc-desc  { font-size:.88rem; color:var(--tx-sec); line-height:1.75; margin-bottom:18px; }
+    .gmc-feats { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:22px; }
+    .gmc-feat  { display:inline-flex; align-items:center; gap:6px; font-size:.74rem; font-weight:600; color:var(--cobalt); background:var(--cobalt-pale); border:1px solid var(--cobalt-pale2); padding:5px 12px; border-radius:var(--r-sm); }
+    .gmc-feat i { font-size:.62rem; }
+    .gmc-prog { margin-bottom:22px; }
+    .gmc-prog-label { display:flex; justify-content:space-between; margin-bottom:8px; }
+    .gmc-prog-label span { font-size:.77rem; color:var(--tx-sec); font-weight:500; }
+    .gmc-prog-label strong { font-weight:800; color:var(--cobalt); }
+    .gmc-bar { height:8px; background:var(--bg-soft); border-radius:4px; overflow:hidden; border:1px solid var(--border); }
+    .gmc-bar-fill { height:100%; border-radius:4px; background:linear-gradient(90deg,var(--cobalt-deep),var(--cobalt),var(--cobalt-xl)); width:0%; transition:width 1.8s var(--ease); }
+    .gmc-bottom { display:flex; align-items:center; gap:14px; padding-top:18px; border-top:1.5px solid var(--border); flex-wrap:wrap; }
+    .gmc-stats { display:flex; gap:16px; flex:1; }
+    .gmc-stat .sv { font-family:var(--ff-disp); font-size:1.1rem; font-weight:800; color:var(--tx-head); line-height:1; }
+    .gmc-stat .sl { font-size:.63rem; color:var(--tx-muted); text-transform:uppercase; letter-spacing:.08em; margin-top:2px; }
+
+    /* side */
+    .games-side { display:flex; flex-direction:column; gap:18px; }
+    .upcoming-card {
+      background:var(--bg-white); border:1.5px dashed var(--border-mid);
+      border-radius:var(--r-lg); padding:24px; text-align:center;
+      transition:all var(--tm) var(--ease);
+    }
+    .upcoming-card:hover { border-color:var(--cobalt-pale2); background:var(--cobalt-pale); transform:translateY(-3px); box-shadow:var(--sh-md); }
+    .uc-emoji { font-size:2.4rem; margin-bottom:9px; }
+    .uc-title { font-family:var(--ff-disp); font-size:1rem; font-weight:800; color:var(--tx-sec); margin-bottom:5px; }
+    .uc-desc  { font-size:.79rem; color:var(--tx-muted); line-height:1.6; }
+
+    .gic {
+      background:var(--bg-navy); border-radius:var(--r-lg); padding:26px;
+      position:relative; overflow:hidden;
+    }
+    .gic-glow { position:absolute; top:-30px; right:-30px; width:140px; height:140px; border-radius:50%; background:radial-gradient(circle,rgba(79,114,240,.3) 0%,transparent 70%); }
+    .gic-title { font-family:var(--ff-disp); font-size:1rem; font-weight:800; color:var(--tx-white); margin-bottom:6px; position:relative; z-index:1; }
+    .gic-desc  { font-size:.81rem; color:var(--tx-wmuted); line-height:1.65; margin-bottom:16px; position:relative; z-index:1; }
+
+    .platform-card { background:var(--bg-white); border:1.5px solid var(--border); border-radius:var(--r-lg); padding:22px; }
+    .plat-row { display:flex; align-items:center; gap:12px; }
+    .plat-row + .plat-row { margin-top:16px; }
+    .plat-ico {
+      width:42px; height:42px; border-radius:var(--r-sm);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1rem; color:#fff; flex-shrink:0;
+    }
+    .plat-name { font-family:var(--ff-disp); font-size:.9rem; font-weight:800; color:var(--tx-head); }
+    .plat-sub  { font-size:.72rem; color:var(--tx-muted); margin-top:1px; }
+
+    /* ══════════════════════════════════════════
+       CTA BANNER
+    ══════════════════════════════════════════ */
+    .cta-banner {
+      background: var(--bg-navy);
+      position: relative; overflow: hidden; width: 100%;
+    }
+    .cta-blob1 { position:absolute; width:600px; height:600px; border-radius:50%; background:radial-gradient(circle,rgba(26,63,202,.35) 0%,transparent 70%); top:-200px; left:-100px; filter:blur(60px); }
+    .cta-blob2 { position:absolute; width:400px; height:400px; border-radius:50%; background:radial-gradient(circle,rgba(245,158,11,.15) 0%,transparent 70%); bottom:-100px; right:100px; filter:blur(60px); }
+    .cta-banner .wrap { position:relative; z-index:2; text-align:center; padding-top:96px; padding-bottom:96px; }
+    .cta-banner .eyebrow { margin:0 auto 22px; }
+    .cta-h2 { font-family:var(--ff-disp); font-size:clamp(2rem,5vw,3.5rem); font-weight:800; color:#fff; letter-spacing:-.04em; line-height:1.1; margin-bottom:18px; }
+    .cta-grad { background:linear-gradient(135deg,#7c9ef8,var(--cobalt-xl)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .cta-sub  { font-size:1.05rem; color:var(--tx-wmuted); max-width:510px; margin:0 auto 38px; line-height:1.8; }
+    .cta-actions { display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; }
+    .cta-trust { display:flex; align-items:center; justify-content:center; gap:28px; margin-top:46px; flex-wrap:wrap; }
+    .cta-trust-item { display:flex; align-items:center; gap:8px; font-size:.81rem; color:rgba(255,255,255,.42); font-weight:500; }
+    .cta-trust-item i { color:var(--cobalt-xl); }
+
+    /* ══════════════════════════════════════════
+       CONTACT
+    ══════════════════════════════════════════ */
+    .contact-sec { background:var(--bg-root); border-top:1.5px solid var(--border); width:100%; }
+    .contact-grid { display:grid; grid-template-columns:1fr 1.2fr; gap:68px; align-items:start; }
+    .contact-lhs .body-lg { margin-bottom:32px; }
+
+    .ci-list { display:flex; flex-direction:column; gap:13px; }
+    .ci-item {
+      display:flex; align-items:flex-start; gap:15px;
+      padding:18px; background:var(--bg-white);
+      border:1.5px solid var(--border); border-radius:var(--r-lg);
+      transition:all var(--tm) var(--ease); box-shadow:var(--sh-sm);
+    }
+    .ci-item:hover { border-color:var(--cobalt-pale2); box-shadow:var(--sh-md); transform:translateX(4px); }
+    .ci-ico {
+      width:44px; height:44px;
+      background:linear-gradient(135deg,var(--cobalt),var(--cobalt-xl));
+      border-radius:var(--r); display:flex; align-items:center; justify-content:center;
+      color:#fff; font-size:.98rem; flex-shrink:0;
+      box-shadow:0 4px 14px rgba(26,63,202,.28);
+    }
+    .ci-ico.gold  { background:linear-gradient(135deg,#d97706,var(--gold-lt)); box-shadow:0 4px 14px rgba(245,158,11,.28); }
+    .ci-ico.green { background:linear-gradient(135deg,#059669,var(--emerald)); box-shadow:0 4px 14px rgba(16,185,129,.28); }
+    .ci-label { font-size:.69rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--tx-muted); margin-bottom:3px; }
+    .ci-value { font-size:.9rem; font-weight:600; color:var(--tx-head); word-break:break-word; }
+    .ci-value a { color:var(--cobalt); transition:color var(--tf); }
+    .ci-value a:hover { color:var(--cobalt-deep); text-decoration:underline; }
+    .ci-small { font-size:.8rem; font-weight:400; color:var(--tx-sec); margin-top:2px; }
+
+    /* form card */
+    .cfc {
+      background:var(--bg-white); border:1.5px solid var(--border);
+      border-radius:var(--r-xl); box-shadow:var(--sh-lg); overflow:hidden;
+    }
+    .cfc-head {
+      background:linear-gradient(135deg,var(--cobalt-deep) 0%,var(--cobalt) 50%,var(--cobalt-light) 100%);
+      padding:26px 30px; position:relative; overflow:hidden;
+    }
+    .cfc-head::before { content:''; position:absolute; inset:0; opacity:.06; background-image:linear-gradient(rgba(255,255,255,.9) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.9) 1px,transparent 1px); background-size:28px 28px; }
+    .cfc-head-title { font-family:var(--ff-disp); font-size:1.25rem; font-weight:800; color:#fff; margin-bottom:3px; position:relative; z-index:1; }
+    .cfc-head-sub   { font-size:.83rem; color:rgba(255,255,255,.7); position:relative; z-index:1; }
+    .cfc-body { padding:28px; }
+
+    .form-row2  { display:grid; grid-template-columns:1fr 1fr; gap:13px; }
+    .form-group { margin-bottom:14px; }
+    .form-group label { display:block; font-size:.79rem; font-weight:600; color:var(--tx-sec); margin-bottom:6px; }
+    .form-input {
+      width:100%; background:var(--bg-soft); border:1.5px solid var(--border);
+      border-radius:var(--r); padding:12px 15px;
+      font-size:.89rem; color:var(--tx-head);
+      transition:all var(--tf) var(--ease); outline:none; resize:vertical;
+    }
+    .form-input::placeholder { color:var(--tx-muted); }
+    .form-input:focus { border-color:var(--cobalt-light); background:var(--bg-white); box-shadow:0 0 0 4px rgba(26,63,202,.08); }
+    textarea.form-input { min-height:118px; }
+    .btn-submit {
+      width:100%; background:linear-gradient(135deg,var(--cobalt-deep),var(--cobalt),var(--cobalt-light));
+      color:#fff; font-size:.93rem; font-weight:700;
+      padding:14px; border-radius:var(--r); box-shadow:var(--sh-cob);
+      transition:all var(--tm) var(--ease);
+      display:flex; align-items:center; justify-content:center; gap:9px;
+      margin-top:4px; position:relative; overflow:hidden;
+    }
+    .btn-submit::before { content:''; position:absolute; top:0; left:-100%; width:60%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent); transition:left .5s ease; }
+    .btn-submit:hover::before { left:160%; }
+    .btn-submit:hover { transform:translateY(-2px); box-shadow:var(--sh-cob-lg); }
+
+    /* ══════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════ */
+    .footer { background:var(--bg-navy); color:var(--tx-wmuted); width:100%; }
+    .footer-top { padding:72px 0 52px; border-bottom:1px solid rgba(255,255,255,.07); }
+    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:52px; }
+
+    .footer-logo {
+      display:flex; align-items:center; gap:11px;
+      font-family:var(--ff-disp); font-weight:800; font-size:1.12rem;
+      color:#fff; margin-bottom:14px;
+    }
+    .footer-logo-mark {
+      width:38px; height:38px;
+      background:linear-gradient(135deg,var(--cobalt),var(--cobalt-xl));
+      border-radius:9px; display:flex; align-items:center; justify-content:center;
+      color:#fff; font-size:.9rem; flex-shrink:0;
+      box-shadow:0 4px 14px rgba(26,63,202,.45);
+    }
+    .footer-brand p { font-size:.84rem; color:rgba(255,255,255,.38); line-height:1.8; max-width:270px; margin-bottom:22px; }
+    .footer-socials { display:flex; gap:8px; }
+    .fsoc {
+      width:35px; height:35px; background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.1); border-radius:var(--r-sm);
+      display:flex; align-items:center; justify-content:center;
+      color:rgba(255,255,255,.42); font-size:.82rem;
+      transition:all var(--tf) var(--ease);
+    }
+    .fsoc:hover { background:rgba(26,63,202,.4); border-color:rgba(79,114,240,.5); color:#fff; transform:translateY(-2px); box-shadow:0 6px 18px rgba(26,63,202,.4); }
+
+    .f-badge {
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:.7rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+      color:var(--cobalt-xl); background:rgba(79,114,240,.12); border:1px solid rgba(79,114,240,.25);
+      padding:5px 12px; border-radius:var(--r-pill); margin-top:15px;
+    }
+
+    .footer-col h4 { font-family:var(--ff-disp); font-size:.8rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.6); margin-bottom:18px; }
+    .footer-links { display:flex; flex-direction:column; gap:10px; }
+    .footer-links a { font-size:.84rem; color:rgba(255,255,255,.35); transition:all var(--tf) var(--ease); display:flex; align-items:center; gap:6px; }
+    .footer-links a:hover { color:rgba(255,255,255,.85); padding-left:4px; }
+    .footer-links a i { font-size:.62rem; color:var(--cobalt-xl); opacity:.6; }
+
+    .footer-bottom { padding:22px 0; }
+    .footer-bottom .wrap { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+    .footer-copy { font-size:.8rem; color:rgba(255,255,255,.28); }
+    .footer-copy a { color:rgba(79,114,240,.85); transition:color var(--tf); }
+    .footer-copy a:hover { color:var(--cobalt-xl); }
+    .footer-legal { display:flex; gap:20px; flex-wrap:wrap; }
+    .footer-legal a { font-size:.79rem; color:rgba(255,255,255,.28); transition:color var(--tf); }
+    .footer-legal a:hover { color:rgba(255,255,255,.72); }
+
+    /* ══════════════════════════════════════════
+       PRIVACY MODAL
+    ══════════════════════════════════════════ */
+    .modal-overlay {
+      position:fixed; inset:0; z-index:9999;
+      background:rgba(11,17,32,.65);
+      backdrop-filter:blur(12px) saturate(180%);
+      -webkit-backdrop-filter:blur(12px) saturate(180%);
+      display:flex; align-items:center; justify-content:center;
+      padding:20px;
+      opacity:0; pointer-events:none;
+      transition:opacity var(--tm) var(--ease);
+    }
+    .modal-overlay.active { opacity:1; pointer-events:all; }
+    .modal-box {
+      background:var(--bg-white); border:1.5px solid var(--border);
+      border-radius:var(--r-xl);
+      width:100%; max-width:860px; max-height:90vh;
+      display:flex; flex-direction:column;
+      box-shadow:0 40px 100px rgba(11,17,32,.25);
+      transform:translateY(24px) scale(.97);
+      transition:transform var(--tm) var(--ease);
+      overflow:hidden;
+    }
+    .modal-overlay.active .modal-box { transform:translateY(0) scale(1); }
+
+    .modal-head {
+      background:linear-gradient(135deg,var(--cobalt-deep) 0%,var(--cobalt) 60%,var(--cobalt-light) 100%);
+      padding:24px 30px;
+      display:flex; align-items:center; justify-content:space-between;
+      flex-shrink:0; position:relative; overflow:hidden;
+    }
+    .modal-head::before {
+      content:''; position:absolute; inset:0; opacity:.05;
+      background-image:linear-gradient(rgba(255,255,255,.9) 1px,transparent 1px),
+                       linear-gradient(90deg,rgba(255,255,255,.9) 1px,transparent 1px);
+      background-size:28px 28px;
+    }
+    .modal-head-left { display:flex; align-items:center; gap:13px; position:relative; z-index:1; }
+    .modal-head-ico {
+      width:42px; height:42px;
+      background:rgba(255,255,255,.15); border:1.5px solid rgba(255,255,255,.25);
+      border-radius:var(--r); display:flex; align-items:center; justify-content:center;
+      color:#fff; font-size:1rem; flex-shrink:0;
+    }
+    .modal-head-title { font-family:var(--ff-disp); font-size:1.2rem; font-weight:800; color:#fff; }
+    .modal-head-sub   { font-size:.78rem; color:rgba(255,255,255,.65); margin-top:2px; }
+    .modal-close-x {
+      width:35px; height:35px;
+      background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
+      border-radius:var(--r-sm);
+      display:flex; align-items:center; justify-content:center;
+      color:rgba(255,255,255,.75); font-size:1rem;
+      cursor:pointer; transition:all var(--tf) var(--ease);
+      position:relative; z-index:1;
+    }
+    .modal-close-x:hover { background:rgba(255,80,80,.25); border-color:rgba(255,80,80,.4); color:#fff; }
+
+    .modal-scroll {
+      overflow-y:auto; flex:1;
+      padding:32px 34px 24px;
+    }
+    .modal-scroll::-webkit-scrollbar       { width:4px; }
+    .modal-scroll::-webkit-scrollbar-track { background:var(--bg-soft); }
+    .modal-scroll::-webkit-scrollbar-thumb { background:var(--cobalt-pale2); border-radius:2px; }
+
+    .pmb { display:flex; gap:9px; flex-wrap:wrap; margin-bottom:28px; padding-bottom:22px; border-bottom:1.5px solid var(--border); }
+    .pmb-item {
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:.72rem; font-weight:600; color:var(--tx-sec);
+      background:var(--bg-soft); border:1.5px solid var(--border);
+      padding:5px 11px; border-radius:var(--r-sm);
+    }
+    .pmb-item i { color:var(--cobalt-light); }
+
+    .pol-blk { margin-bottom:30px; }
+    .pol-blk h3 {
+      font-family:var(--ff-disp); font-size:.98rem; font-weight:800;
+      color:var(--tx-head); margin-bottom:11px;
+      display:flex; align-items:center; gap:9px;
+    }
+    .ph-ico {
+      width:27px; height:27px;
+      background:var(--cobalt-pale); border:1.5px solid var(--cobalt-pale2);
+      border-radius:7px; display:flex; align-items:center; justify-content:center;
+      color:var(--cobalt); font-size:.7rem; flex-shrink:0;
+    }
+    .pol-blk p  { font-size:.87rem; color:var(--tx-sec); line-height:1.85; margin-bottom:9px; }
+    .pol-blk ul { display:flex; flex-direction:column; gap:6px; margin-top:7px; }
+    .pol-blk li {
+      font-size:.86rem; color:var(--tx-sec); line-height:1.75;
+      padding-left:20px; position:relative;
+    }
+    .pol-blk li::before { content:'▸'; position:absolute; left:0; color:var(--cobalt-light); font-size:.7rem; top:3px; }
+    .pol-blk li strong { color:var(--tx-head); }
+
+    .pol-callout {
+      background:var(--cobalt-pale); border:1.5px solid var(--cobalt-pale2);
+      border-left:4px solid var(--cobalt);
+      border-radius:0 var(--r) var(--r) 0;
+      padding:14px 18px; margin:14px 0;
+    }
+    .pol-callout p { color:var(--tx-head) !important; font-weight:500; margin:0 !important; }
+    .pol-callout p strong { color:var(--cobalt-deep); }
+
+    .pol-success {
+      background:var(--em-pale); border:1.5px solid #a7f3d0;
+      border-left:4px solid var(--emerald);
+      border-radius:0 var(--r) var(--r) 0;
+      padding:14px 18px; margin:14px 0;
+    }
+    .pol-success p { color:#065f46 !important; font-weight:500; margin:0 !important; }
+
+    .pol-div { height:1.5px; background:var(--border); margin:26px 0; }
+
+    .modal-foot {
+      padding:16px 30px;
+      border-top:1.5px solid var(--border);
+      display:flex; align-items:center; justify-content:space-between;
+      flex-wrap:wrap; gap:10px; flex-shrink:0;
+      background:var(--bg-soft);
+    }
+    .modal-foot p { font-size:.77rem; color:var(--tx-muted); display:flex; align-items:center; gap:6px; }
+    .modal-foot p i { color:var(--cobalt-light); }
+    .btn-close-modal {
+      background:linear-gradient(135deg,var(--cobalt),var(--cobalt-light));
+      color:#fff; font-size:.84rem; font-weight:700;
+      padding:10px 22px; border-radius:var(--r);
+      cursor:pointer; transition:all var(--tm) var(--ease);
+      box-shadow:var(--sh-cob);
+    }
+    .btn-close-modal:hover { transform:translateY(-1px); box-shadow:var(--sh-cob-lg); }
+
+    /* ══════════════════════════════════════════
+       TOAST
+    ══════════════════════════════════════════ */
+    .toast {
+      position:fixed; bottom:26px; right:26px; z-index:9990;
+      background:var(--bg-white); border:1.5px solid var(--border);
+      border-radius:var(--r-lg);
+      padding:13px 18px;
+      display:flex; align-items:center; gap:12px;
+      box-shadow:var(--sh-xl);
+      transform:translateY(20px); opacity:0; pointer-events:none;
+      transition:all .3s var(--ease);
+      max-width:330px;
+    }
+    .toast.show { transform:translateY(0); opacity:1; pointer-events:all; }
+    .toast-ico {
+      width:32px; height:32px;
+      background:var(--cobalt-pale); border:1.5px solid var(--cobalt-pale2);
+      border-radius:var(--r-sm);
+      display:flex; align-items:center; justify-content:center;
+      color:var(--cobalt); font-size:.85rem; flex-shrink:0;
+    }
+    .toast-title { font-size:.85rem; font-weight:700; color:var(--tx-head); }
+    .toast-msg   { font-size:.76rem; color:var(--tx-sec); margin-top:1px; }
+
+    /* ══════════════════════════════════════════
+       SCROLL TOP
+    ══════════════════════════════════════════ */
+    .scroll-top {
+      position:fixed; bottom:26px; right:26px; z-index:500;
+      width:44px; height:44px;
+      background:linear-gradient(135deg,var(--cobalt),var(--cobalt-light));
+      border-radius:var(--r);
+      display:flex; align-items:center; justify-content:center;
+      color:#fff; font-size:.88rem;
+      box-shadow:var(--sh-cob);
+      cursor:pointer;
+      opacity:0; pointer-events:none;
+      transform:translateY(10px);
+      transition:all var(--tm) var(--ease);
+    }
+    .scroll-top.show { opacity:1; pointer-events:all; transform:translateY(0); }
+    .scroll-top:hover { transform:translateY(-3px); box-shadow:var(--sh-cob-lg); }
+
+    /* ══════════════════════════════════════════
+       ANIMATIONS
+    ══════════════════════════════════════════ */
+    @keyframes slideUp   { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes slideDown { from{opacity:0;transform:translateY(-16px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes slideRight{ from{opacity:0;transform:translateX(30px)} to{opacity:1;transform:translateX(0)} }
+
+    .reveal      { opacity:0; transform:translateY(28px);  transition:opacity .7s var(--ease),transform .7s var(--ease); }
+    .reveal-l    { opacity:0; transform:translateX(-28px); transition:opacity .7s var(--ease),transform .7s var(--ease); }
+    .reveal-r    { opacity:0; transform:translateX(28px);  transition:opacity .7s var(--ease),transform .7s var(--ease); }
+    .reveal.on, .reveal-l.on, .reveal-r.on { opacity:1; transform:translate(0); }
+
+    /* ══════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════ */
+    @media(max-width:1100px){
+      .services-grid { grid-template-columns:repeat(2,1fr); }
+      .footer-grid   { grid-template-columns:1fr 1fr; gap:36px; }
+      .footer-brand  { grid-column:span 2; }
+    }
+    @media(max-width:960px){
+      .hero .wrap        { grid-template-columns:1fr; gap:48px; text-align:center; }
+      .hero-rhs          { order:-1; }
+      .hero-sub          { max-width:100%; margin-left:auto; margin-right:auto; }
+      .hero-actions      { justify-content:center; }
+      .hero-trust        { justify-content:center; }
+      .float-badge       { display:none; }
+      .about .wrap       { grid-template-columns:1fr; gap:48px; }
+      .about-visual      { grid-template-columns:1fr 1fr; }
+      .games-grid        { grid-template-columns:1fr; }
+      .games-side        { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+      .contact-grid      { grid-template-columns:1fr; gap:44px; }
+    }
+    @media(max-width:768px){
+      .wrap              { padding:0 18px; }
+      .sec               { padding:72px 0; }
+      .nav-links         { display:none; }
+      .hamburger         { display:flex; }
+      .mobile-drawer     { display:flex; }
+      .services-grid     { grid-template-columns:1fr; }
+      .games-side        { grid-template-columns:1fr; }
+      .form-row2         { grid-template-columns:1fr; }
+      .footer-grid       { grid-template-columns:1fr; }
+      .footer-brand      { grid-column:unset; }
+      .footer-bottom .wrap{ flex-direction:column; align-items:flex-start; }
+      .modal-scroll      { padding:20px; }
+      .modal-head        { padding:18px 20px; }
+      .modal-foot        { padding:14px 20px; }
+    }
+    @media(max-width:500px){
+      .hero-h1           { font-size:clamp(2.4rem,10vw,3rem); }
+      .hero-actions      { flex-direction:column; align-items:stretch; }
+      .hero-actions .btn { justify-content:center; }
+      .hero-trust        { flex-direction:column; align-items:center; gap:14px; }
+      .trust-sep         { display:none; }
+      .about-visual      { grid-template-columns:1fr; }
+      .av-card.span2     { flex-direction:column; text-align:center; }
+      .cta-actions       { flex-direction:column; align-items:stretch; }
+      .cta-actions .btn  { justify-content:center; }
+      .gmc-bottom        { flex-direction:column; align-items:stretch; }
+      .footer-legal      { flex-direction:column; gap:8px; }
+      .modal-box         { max-height:95vh; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════════ -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="wrap">
+      <div class="nav-inner">
+
+        <a href="#home" class="logo" aria-label="Dhillon Interactive home">
+          <div class="logo-mark" aria-hidden="true"><i class="fas fa-gamepad"></i></div>
+          <span>Dhillon <em>Interactive</em></span>
+        </a>
+
+        <ul class="nav-links" role="list">
+          <li><a href="#about"    class="nav-lnk">About</a></li>
+          <li><a href="#services" class="nav-lnk">Services</a></li>
+          <li><a href="#games"    class="nav-lnk">Games</a></li>
+          <li><a href="#contact"  class="nav-lnk">Contact</a></li>
+          <li>
+            <a href="#" class="nav-lnk privacy-trigger"
+               role="button" aria-haspopup="dialog">
+              Privacy Policy
+            </a>
+          </li>
+          <li><a href="#games" class="nav-lnk nav-pill">
+            <i class="fas fa-rocket" aria-hidden="true"></i> Explore Games
+          </a></li>
+        </ul>
+
+        <button class="hamburger" id="hamburgerBtn"
+          aria-label="Toggle menu" aria-expanded="false"
+          aria-controls="mobileDrawer">
+          <span></span><span></span><span></span>
+        </button>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" id="mobileDrawer"
+    role="dialog" aria-label="Mobile navigation" aria-modal="true">
+    <a href="#about"    class="dl">About</a>
+    <a href="#services" class="dl">Services</a>
+    <a href="#games"    class="dl">Games</a>
+    <a href="#contact"  class="dl">Contact</a>
+    <a href="#" class="dl privacy-trigger" role="button">Privacy Policy</a>
+    <a href="#games" class="dl" style="color:var(--cobalt);font-weight:900;">
+      <i class="fas fa-rocket"></i> Explore Games
+    </a>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       HERO
+  ══════════════════════════════════════════ -->
+  <section class="hero" id="home" aria-label="Hero">
+    <div class="hero-blob hero-blob-1" aria-hidden="true"></div>
+    <div class="hero-blob hero-blob-2" aria-hidden="true"></div>
+    <div class="hero-grid-pat"         aria-hidden="true"></div>
+
+    <div class="wrap">
+
+      <!-- LEFT -->
+      <div class="hero-lhs">
+        <div class="hero-badge">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          Independent Studio &mdash; Haryana, India
+        </div>
+
+        <h1 class="hero-h1">
+          Crafting<br>
+          <span class="word-grad">Immersive</span><br>
+          <span class="word-outline">Worlds</span>
+        </h1>
+
+        <p class="hero-sub">
+          <strong>Dhillon Interactive</strong> is a solo-driven indie studio
+          building deep, mechanics-rich games for PC and mobile — powered by
+          passion, precision, and a relentless pursuit of great experiences.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#games" class="btn btn-cobalt btn-lg">
+            <i class="fas fa-gamepad" aria-hidden="true"></i>
+            Explore Our Games
+          </a>
+          <a href="#about" class="btn btn-outline btn-lg">
+            Our Story <i class="fas fa-arrow-right" aria-hidden="true"></i>
+          </a>
+        </div>
+
+        <div class="hero-trust" aria-label="Studio highlights">
+          <div class="trust-item">
+            <div class="trust-ico" aria-hidden="true"><i class="fas fa-gamepad"></i></div>
+            <div>
+              <div class="t-val">1+</div>
+              <div class="t-lbl">Games in Dev</div>
+            </div>
+          </div>
+          <div class="trust-sep" aria-hidden="true"></div>
+          <div class="trust-item">
+            <div class="trust-ico" aria-hidden="true"><i class="fas fa-mobile-screen"></i></div>
+            <div>
+              <div class="t-val">PC + Mobile</div>
+              <div class="t-lbl">Platforms</div>
+            </div>
+          </div>
+          <div class="trust-sep" aria-hidden="true"></div>
+          <div class="trust-item">
+            <div class="trust-ico" aria-hidden="true"><i class="fas fa-shield-halved"></i></div>
+            <div>
+              <div class="t-val">Privacy First</div>
+              <div class="t-lbl">Zero data sold</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="hero-rhs">
+        <div class="float-badge fb-tl" aria-hidden="true">
+          <div class="fb-ico cob"><i class="fas fa-star"></i></div>
+          <div>
+            <div style="font-size:.77rem;font-weight:700;color:var(--tx-head);">Featured Project</div>
+            <div style="font-size:.68rem;color:var(--tx-muted);margin-top:1px;">Land Battle</div>
+          </div>
+        </div>
+        <div class="float-badge fb-br" aria-hidden="true">
+          <div class="fb-ico gold"><i class="fas fa-trophy"></i></div>
+          <div>
+            <div style="font-size:.77rem;font-weight:700;color:var(--tx-head);">Target Launch</div>
+            <div style="font-size:.68rem;color:var(--tx-muted);margin-top:1px;">2026 &bull; PC & Mobile</div>
+          </div>
+        </div>
+
+        <div class="hero-float-card">
+          <div class="hfc-banner">
+            <div class="hfc-grid-pat"  aria-hidden="true"></div>
+            <div class="hfc-banner-glow1" aria-hidden="true"></div>
+            <div class="hfc-banner-glow2" aria-hidden="true"></div>
+            <div class="hfc-status">
+              <span class="sd" aria-hidden="true"></span> In Development
+            </div>
+            <div class="hfc-plats" aria-label="Platforms">
+              <span>PC</span><span>Mobile</span>
+            </div>
+            <span class="hfc-icon" aria-hidden="true">⚔️</span>
+          </div>
+          <div class="hfc-body">
+            <div class="hfc-genre">Medieval Strategy &bull; Turn-Based</div>
+            <h2 class="hfc-title">Land Battle</h2>
+            <p class="hfc-desc">Command armies, master formations, and conquer medieval kingdoms in this deep strategy epic.</p>
+            <div class="hfc-tags">
+              <span class="hfc-tag">Turn-Based</span>
+              <span class="hfc-tag">Territory Control</span>
+              <span class="hfc-tag">Solo Dev</span>
+              <span class="hfc-tag">Rich Lore</span>
+            </div>
+            <div class="hfc-prog-wrap" aria-label="Dev progress: 30%">
+              <div class="hfc-prog-top">
+                <span>Development Progress</span>
+                <strong>30%</strong>
+              </div>
+              <div class="hfc-bar">
+                <div class="hfc-bar-fill" data-w="30%"></div>
+              </div>
+            </div>
+            <div class="hfc-foot">
+              <div class="hfc-meta">
+                <div class="hfc-meta-item">
+                  <div class="hfc-meta-val">2026</div>
+                  <div class="hfc-meta-lbl">Target</div>
+                </div>
+                <div class="hfc-meta-item">
+                  <div class="hfc-meta-val">Solo</div>
+                  <div class="hfc-meta-lbl">Studio</div>
+                </div>
+                <div class="hfc-meta-item">
+                  <div class="hfc-meta-val">2</div>
+                  <div class="hfc-meta-lbl">Platforms</div>
+                </div>
+              </div>
+              <button class="btn btn-cobalt btn-sm"
+                onclick="showToast('🎮 Noted!','You\'ll be first to know when Land Battle drops!')"
+                aria-label="Get notified">
+                <i class="fas fa-bell" aria-hidden="true"></i> Notify Me
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       MARQUEE
+  ══════════════════════════════════════════ -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track" id="marqueeTrack"></div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       ABOUT
+  ══════════════════════════════════════════ -->
+  <section class="about sec" id="about" aria-label="About Dhillon Interactive">
+    <div class="wrap">
+
+      <!-- LEFT -->
+      <div class="reveal-l">
+        <div class="eyebrow"><i class="fas fa-building" aria-hidden="true"></i> About the Studio</div>
+        <h2 class="display-title" style="margin-bottom:22px;">
+          An Independent Studio<br>with a <span class="grad">Global Vision</span>
+        </h2>
+        <p class="body-lg">
+          <strong>Dhillon Interactive</strong> is an indie game development
+          and software publishing studio founded to build memorable,
+          mechanics-driven experiences that push the boundaries of
+          interactive storytelling.
+        </p>
+        <p class="body-lg">
+          Operating as a <strong>solo studio</strong> out of Haryana, India,
+          we believe great games come from focused vision, relentless
+          iteration, and genuine passion — not just massive teams or
+          enormous budgets.
+        </p>
+        <p class="body-lg">
+          From <strong>medieval strategy epics</strong> to future mobile
+          titles, Dhillon Interactive builds a portfolio for players who
+          crave depth, strategy, and true immersion.
+        </p>
+
+        <div class="pillar-list" role="list">
+          <div class="pillar" role="listitem">
+            <div class="pillar-ico" aria-hidden="true"><i class="fas fa-chess-knight"></i></div>
+            <div>
+              <div class="pillar-title">Deep Strategy &amp; Mechanics</div>
+              <div class="pillar-desc">Games that reward thoughtful play and mastery</div>
+            </div>
+          </div>
+          <div class="pillar" role="listitem">
+            <div class="pillar-ico" aria-hidden="true"><i class="fas fa-book-open"></i></div>
+            <div>
+              <div class="pillar-title">Rich Narrative Worlds</div>
+              <div class="pillar-desc">Lore and stories that keep players deeply invested</div>
+            </div>
+          </div>
+          <div class="pillar" role="listitem">
+            <div class="pillar-ico" aria-hidden="true"><i class="fas fa-mobile-screen"></i></div>
+            <div>
+              <div class="pillar-title">Cross-Platform Publishing</div>
+              <div class="pillar-desc">PC and mobile — reaching a global audience</div>
+            </div>
+          </div>
+          <div class="pillar" role="listitem">
+            <div class="pillar-ico" aria-hidden="true"><i class="fas fa-code"></i></div>
+            <div>
+              <div class="pillar-title">Tech &amp; Software Solutions</div>
+              <div class="pillar-desc">Custom tools and software products in parallel</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="about-visual reveal-r">
+        <div class="av-card av-stat">
+          <div class="av-number">∞</div>
+          <div class="av-label">Ambition Level</div>
+        </div>
+        <div class="av-card av-stat">
+          <div class="av-number">1</div>
+          <div class="av-label">Active Game</div>
+        </div>
+        <div class="av-card span2">
+          <span class="av-emoji" aria-hidden="true">🎮</span>
+          <div>
+            <div class="av-title">Solo-Driven Development</div>
+            <div class="av-text">Every game is conceived, designed, built, and published by one dedicated developer — an uncompromised creative vision from concept to launch.</div>
+          </div>
+        </div>
+        <div class="av-card">
+          <span class="av-emoji" aria-hidden="true">🌏</span>
+          <div class="av-title">Global Audience</div>
+          <div class="av-text">Google Play &amp; PC storefronts — reaching players worldwide.</div>
+        </div>
+        <div class="av-card">
+          <span class="av-emoji" aria-hidden="true">🛡️</span>
+          <div class="av-title">Privacy First</div>
+          <div class="av-text">Player trust at the core — minimal data, transparent policies.</div>
+        </div>
+        <div class="av-card">
+          <span class="av-emoji" aria-hidden="true">⚡</span>
+          <div class="av-title">Rapid Iteration</div>
+          <div class="av-text">Agile solo workflow — fast decisions, direct player feedback.</div>
+        </div>
+        <div class="av-card">
+          <span class="av-emoji" aria-hidden="true">🎯</span>
+          <div class="av-title">Strategic Focus</div>
+          <div class="av-text">Deep strategy expertise — turn-based to real-time tactics.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       SERVICES
+  ══════════════════════════════════════════ -->
+  <section class="services sec" id="services" aria-label="Our services">
+    <div class="wrap">
+
+      <div class="services-hdr reveal">
+        <div class="eyebrow gold"><i class="fas fa-star" aria-hidden="true"></i> What We Do</div>
+        <h2 class="display-title" style="margin-bottom:14px;">
+          Our <span class="grad-gold">Capabilities</span>
+        </h2>
+        <p class="body-lg">From pixel-perfect game design to software solutions — here is what Dhillon Interactive brings to the table.</p>
+      </div>
+
+      <div class="services-grid">
+
+        <div class="svc-card reveal">
+          <div class="svc-ico ico-cobalt" aria-hidden="true"><i class="fas fa-gamepad"></i></div>
+          <div class="svc-title">Game Design &amp; Development</div>
+          <p class="svc-desc">End-to-end game creation — from concept and game-loop design through programming, art integration, to polished release-ready builds for PC and mobile.</p>
+          <div class="svc-tags">
+            <span class="svc-tag tag-cob">Unity / Godot</span>
+            <span class="svc-tag tag-cob">PC &amp; Mobile</span>
+            <span class="svc-tag tag-cob">Strategy</span>
+          </div>
+        </div>
+
+        <div class="svc-card reveal">
+          <div class="svc-ico ico-gold" aria-hidden="true">
+            <i class="fas fa-rocket"></i>
+          </div>
+          <div class="svc-title">Game Publishing</div>
+          <p class="svc-desc">Full-cycle mobile and PC publishing — Google Play Console setup, App Store optimisation, compliance reviews, store listings, and post-launch analytics monitoring.</p>
+          <div class="svc-tags">
+            <span class="svc-tag tag-gold">Google Play</span>
+            <span class="svc-tag tag-gold">ASO</span>
+            <span class="svc-tag tag-cob">PC Stores</span>
+          </div>
+        </div>
+
+        <div class="svc-card reveal">
+          <div class="svc-ico ico-emerald" aria-hidden="true"><i class="fas fa-code"></i></div>
+          <div class="svc-title">Software &amp; Tech Solutions</div>
+          <p class="svc-desc">Custom software alongside game production — internal tooling, web utilities, productivity apps, and bespoke tech solutions for small teams and creators.</p>
+          <div class="svc-tags">
+            <span class="svc-tag tag-cob">Web Apps</span>
+            <span class="svc-tag tag-cob">Tools</span>
+            <span class="svc-tag tag-cob">Automation</span>
+          </div>
+        </div>
+
+        <div class="svc-card reveal">
+          <div class="svc-ico ico-violet" aria-hidden="true"><i class="fas fa-palette"></i></div>
+          <div class="svc-title">UI / UX &amp; Game Art</div>
+          <p class="svc-desc">Crafting intuitive, visually compelling interfaces and in-game art — HUDs, menus, icons, promotional art, and full visual identity systems for games and apps.</p>
+          <div class="svc-tags">
+            <span class="svc-tag tag-cob">UI Systems</span>
+            <span class="svc-tag tag-cob">Game Art</span>
+            <span class="svc-tag tag-cob">Branding</span>
+          </div>
+        </div>
+
+        <div class="svc-card reveal">
+          <div class="svc-ico ico-rose" aria-hidden="true"><i class="fas fa-chart-line"></i></div>
+          <div class="svc-title">Analytics &amp; Growth</div>
+          <p class="svc-desc">Data-driven growth strategy — in-game analytics integration, player behaviour funnels, retention optimisation, ad monetisation setup, and live-ops event planning.</p>
+          <div class="svc-tags">
+            <span class="svc-tag tag-cob">Firebase</span>
+            <span class="svc-tag tag-gold">AdMob</span>
+            <span class="svc-tag tag-cob">Retention</span>
+          </div>
+        </div>
+
+        <div class="svc-card reveal">
+          <div class="svc-ico ico-sky" aria-hidden="true"><i class="fas fa-shield-halved"></i></div>
+          <div class="svc-title">Compliance &amp; Privacy</div>
+          <p class="svc-desc">Privacy policy drafting, GDPR and COPPA compliance reviews, Google Play policy adherence, data safety form completion, and store review preparation for smooth approvals.</p>
+          <div class="svc-tags">
+            <span class="svc-tag tag-cob">GDPR</span>
+            <span class="svc-tag tag-cob">COPPA</span>
+            <span class="svc-tag tag-cob">Play Policy</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       GAMES
+  ══════════════════════════════════════════ -->
+  <section class="games-sec sec" id="games" aria-label="Our games and projects">
+    <div class="wrap">
+
+      <div class="games-hdr reveal">
+        <div>
+          <div class="eyebrow"><i class="fas fa-gamepad" aria-hidden="true"></i> Games &amp; Projects</div>
+          <h2 class="display-title" style="margin-bottom:10px;">Our <span class="grad">Portfolio</span></h2>
+          <p class="body-lg" style="max-width:500px;">Every title we build is a labour of passion — from active development to future concepts on the drawing board.</p>
+        </div>
+        <a href="#contact" class="btn btn-outline">
+          <i class="fas fa-handshake" aria-hidden="true"></i> Work With Us
+        </a>
+      </div>
+
+      <div class="games-grid">
+
+        <!-- FEATURED GAME CARD -->
+        <article class="gmc reveal-l" aria-label="Land Battle — Featured Game">
+          <div class="gmc-banner">
+            <div class="gmc-banner-grid"  aria-hidden="true"></div>
+            <div class="gmc-banner-glow1" aria-hidden="true"></div>
+            <div class="gmc-banner-glow2" aria-hidden="true"></div>
+            <div class="gmc-badge-tl">
+              <span class="gd" aria-hidden="true"></span>
+              Coming Soon — 2026
+            </div>
+            <div class="gmc-plats-tr" aria-label="Platforms">
+              <span class="gmc-plat">PC</span>
+              <span class="gmc-plat">Android</span>
+            </div>
+            <span class="gmc-icon" aria-hidden="true">⚔️</span>
+          </div>
+          <div class="gmc-body">
+            <div class="gmc-genre">Medieval Strategy &bull; Turn-Based Tactics</div>
+            <h3 class="gmc-title">Land Battle</h3>
+            <p class="gmc-desc">Command vast medieval armies across sprawling battlefields. Master unit formations, manage resource chains, and forge your path to territorial conquest in a richly crafted turn-based strategy experience.</p>
+            <div class="gmc-feats" aria-label="Key features">
+              <span class="gmc-feat"><i class="fas fa-chess-knight"></i> Turn-Based Combat</span>
+              <span class="gmc-feat"><i class="fas fa-map"></i> Territory Control</span>
+              <span class="gmc-feat"><i class="fas fa-shield-halved"></i> Army Customisation</span>
+              <span class="gmc-feat"><i class="fas fa-book"></i> Rich Lore</span>
+              <span class="gmc-feat"><i class="fas fa-user"></i> Single Player</span>
+            </div>
+            <div class="gmc-prog" aria-label="Development progress 30%">
+              <div class="gmc-prog-label">
+                <span>Development Progress</span>
+                <strong>30% Complete</strong>
+              </div>
+              <div class="gmc-bar">
+                <div class="gmc-bar-fill" data-w="30%"></div>
+              </div>
+            </div>
+            <div class="gmc-bottom">
+              <div class="gmc-stats">
+                <div class="gmc-stat">
+                  <span class="sv">2026</span>
+                  <span class="sl">Target</span>
+                </div>
+                <div class="gmc-stat">
+                  <span class="sv">Solo</span>
+                  <span class="sl">Studio</span>
+                </div>
+                <div class="gmc-stat">
+                  <span class="sv">2</span>
+                  <span class="sl">Platforms</span>
+                </div>
+              </div>
+              <button class="btn btn-cobalt"
+                onclick="showToast('🎮 Noted!','We\'ll let you know the moment Land Battle launches!')"
+                aria-label="Get notified when Land Battle launches">
+                <i class="fas fa-bell" aria-hidden="true"></i> Notify Me
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- SIDE PANEL -->
+        <div class="games-side">
+
+          <!-- Upcoming placeholder -->
+          <div class="upcoming-card reveal">
+            <div class="uc-emoji" aria-hidden="true">🔮</div>
+            <div class="uc-title">Untitled Project</div>
+            <div class="uc-desc">Something new is brewing in the workshop — a fresh concept taking shape. Stay tuned for the announcement.</div>
+            <button class="btn btn-outline btn-sm"
+              style="margin-top:14px;width:100%;justify-content:center;"
+              onclick="showToast('👀 Stay Tuned!','Our next project will be revealed soon!')"
+              aria-label="Follow for updates">
+              <i class="fas fa-eye" aria-hidden="true"></i> Follow for Updates
+            </button>
+          </div>
+
+          <!-- Dark info card -->
+          <div class="gic reveal">
+            <div class="gic-glow" aria-hidden="true"></div>
+            <div class="eyebrow white" style="margin-bottom:12px;">
+              <i class="fas fa-code-branch" aria-hidden="true"></i> Solo Studio
+            </div>
+            <div class="gic-title">Built by One. Played by Many.</div>
+            <div class="gic-desc">Every mechanic, every pixel, every line of code in Land Battle is crafted by a single dedicated developer — an uncompromised vision from start to finish.</div>
+            <a href="#about" class="btn btn-ghost-white btn-sm">
+              <i class="fas fa-arrow-right" aria-hidden="true"></i> Our Story
+            </a>
+          </div>
+
+          <!-- Platform card -->
+          <div class="platform-card reveal">
+            <div class="plat-row">
+              <div class="plat-ico" style="background:linear-gradient(135deg,var(--cobalt),var(--cobalt-xl));box-shadow:0 4px 14px rgba(26,63,202,.3);" aria-hidden="true">
+                <i class="fab fa-google-play"></i>
+              </div>
+              <div>
+                <div class="plat-name">Google Play</div>
+                <div class="plat-sub">Android publishing target</div>
+              </div>
+            </div>
+            <div class="plat-row">
+              <div class="plat-ico" style="background:linear-gradient(135deg,#1a1a2e,#16213e);border:1px solid rgba(255,255,255,.08);" aria-hidden="true">
+                <i class="fas fa-desktop"></i>
+              </div>
+              <div>
+                <div class="plat-name">PC / Desktop</div>
+                <div class="plat-sub">Windows &amp; more</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /games-side -->
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       CTA BANNER
+  ══════════════════════════════════════════ -->
+  <section class="cta-banner" aria-label="Call to action">
+    <div class="cta-blob1" aria-hidden="true"></div>
+    <div class="cta-blob2" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="eyebrow white reveal">
+        <i class="fas fa-rocket" aria-hidden="true"></i> Join the Journey
+      </div>
+      <h2 class="cta-h2 reveal">
+        Ready to Play Something<br>
+        <span class="cta-grad">Truly Different?</span>
+      </h2>
+      <p class="cta-sub reveal">
+        Land Battle is coming to PC and Android in 2026. Get notified the moment we launch and be among the first players to enter the battlefield.
+      </p>
+      <div class="cta-actions reveal">
+        <button class="btn btn-gold btn-lg"
+          onclick="showToast('🏆 You\'re on the list!','We\'ll notify you the moment Land Battle goes live.')"
+          aria-label="Get notified at launch">
+          <i class="fas fa-bell" aria-hidden="true"></i> Get Notified at Launch
+        </button>
+        <a href="#contact" class="btn btn-ghost-white btn-lg">
+          <i class="fas fa-envelope" aria-hidden="true"></i> Contact the Studio
+        </a>
+      </div>
+      <div class="cta-trust reveal">
+        <div class="cta-trust-item"><i class="fas fa-shield-halved"></i> Zero spam — ever</div>
+        <div class="cta-trust-item"><i class="fas fa-lock"></i> No account needed</div>
+        <div class="cta-trust-item"><i class="fas fa-heart"></i> Made with passion</div>
+        <div class="cta-trust-item"><i class="fas fa-globe"></i> Available worldwide</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       CONTACT
+  ══════════════════════════════════════════ -->
+  <section class="contact-sec sec" id="contact" aria-label="Contact Dhillon Interactive">
+    <div class="wrap">
+      <div class="contact-grid">
+
+        <!-- LEFT -->
+        <div class="reveal-l">
+          <div class="eyebrow"><i class="fas fa-envelope" aria-hidden="true"></i> Get In Touch</div>
+          <h2 class="display-title" style="margin-bottom:16px;">Let's <span class="grad">Connect</span></h2>
+          <p class="body-lg contact-lhs">
+            Whether you're a player with feedback, a publisher with an opportunity, or a fellow developer — we'd love to hear from you. Every message is read personally.
+          </p>
+
+          <div class="ci-list" role="list">
+
+            <div class="ci-item" role="listitem">
+              <div class="ci-ico" aria-hidden="true"><i class="fas fa-envelope"></i></div>
+              <div>
+                <div class="ci-label">Official Email</div>
+                <div class="ci-value">
+                  <a href="mailto:admin@dhillon-interactive.com">admin@dhillon-interactive.com</a>
+                  <div class="ci-small">We reply within 1–3 business days</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ci-item" role="listitem">
+              <div class="ci-ico" aria-hidden="true"><i class="fas fa-globe"></i></div>
+              <div>
+                <div class="ci-label">Website</div>
+                <div class="ci-value">
+                  <a href="https://dhillon-interactive.com" target="_blank" rel="noopener noreferrer">dhillon-interactive.com</a>
+                  <div class="ci-small">Our official online home</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ci-item" role="listitem">
+              <div class="ci-ico gold" aria-hidden="true"><i class="fas fa-map-marker-alt"></i></div>
+              <div>
+                <div class="ci-label">Registered Address</div>
+                <div class="ci-value">
+                  Village Babroli, Block Jatusana,<br>
+                  City Kosli, District Rewari,<br>
+                  Pincode 123401, Haryana, India
+                </div>
+              </div>
+            </div>
+
+            <div class="ci-item" role="listitem">
+              <div class="ci-ico green" aria-hidden="true"><i class="fas fa-clock"></i></div>
+              <div>
+                <div class="ci-label">Response Time</div>
+                <div class="ci-value">
+                  1–3 Business Days
+                  <div class="ci-small">For urgent matters, email us directly</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- RIGHT — Form -->
+        <div class="reveal-r">
+          <div class="cfc">
+            <div class="cfc-head">
+              <div class="cfc-head-title">Send Us a Message</div>
+              <div class="cfc-head-sub">Fill in the form and we'll get back to you shortly.</div>
+            </div>
+            <div class="cfc-body">
+              <form id="contactForm" novalidate aria-label="Contact form">
+                <div class="form-row2">
+                  <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="firstName" class="form-input" placeholder="John" autocomplete="given-name" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" class="form-input" placeholder="Doe" autocomplete="family-name" required />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="emailAddr">Email Address</label>
+                  <input type="email" id="emailAddr" name="email" class="form-input" placeholder="you@example.com" autocomplete="email" required />
+                </div>
+                <div class="form-group">
+                  <label for="subject">Subject</label>
+                  <input type="text" id="subject" name="subject" class="form-input" placeholder="Game feedback, partnership, support…" required />
+                </div>
+                <div class="form-group">
+                  <label for="message">Message</label>
+                  <textarea id="message" name="message" class="form-input" placeholder="Write your message here…" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn-submit" aria-label="Send message">
+                  <i class="fas fa-paper-plane" aria-hidden="true"></i> Send Message
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+
+    <div class="footer-top">
+      <div class="wrap">
+        <div class="footer-grid">
+
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <div class="footer-logo-mark" aria-hidden="true"><i class="fas fa-gamepad"></i></div>
+              Dhillon <span style="color:var(--cobalt-xl);">Interactive</span>
+            </div>
+            <p>An independent game development and software publishing studio crafting immersive digital experiences. Based in Haryana, India — building for the globe.</p>
+            <div class="footer-socials" aria-label="Social media">
+              <a href="#" class="fsoc" aria-label="Twitter / X"><i class="fab fa-x-twitter"></i></a>
+              <a href="#" class="fsoc" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+              <a href="#" class="fsoc" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+              <a href="#" class="fsoc" aria-label="GitHub"><i class="fab fa-github"></i></a>
+              <a href="#" class="fsoc" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <div class="f-badge">
+              <i class="fas fa-map-pin" aria-hidden="true"></i>
+              Haryana, India &bull; Est. 2024
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <h4>Navigate</h4>
+            <nav class="footer-links" aria-label="Footer navigation">
+              <a href="#home"><i class="fas fa-chevron-right"></i> Home</a>
+              <a href="#about"><i class="fas fa-chevron-right"></i> About Us</a>
+              <a href="#services"><i class="fas fa-chevron-right"></i> Services</a>
+              <a href="#games"><i class="fas fa-chevron-right"></i> Games</a>
+              <a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a>
+            </nav>
+          </div>
+
+          <div class="footer-col">
+            <h4>Games</h4>
+            <nav class="footer-links" aria-label="Games">
+              <a href="#games"><i class="fas fa-chevron-right"></i> Land Battle</a>
+              <a href="#games"><i class="fas fa-chevron-right"></i> Upcoming Titles</a>
+              <a href="https://play.google.com" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-right"></i> Google Play</a>
+            </nav>
+          </div>
+
+          <div class="footer-col">
+            <h4>Legal</h4>
+            <nav class="footer-links" aria-label="Legal">
+              <a href="#" class="privacy-trigger" role="button"><i class="fas fa-chevron-right"></i> Privacy Policy</a>
+              <a href="mailto:admin@dhillon-interactive.com"><i class="fas fa-chevron-right"></i> Terms of Use</a>
+              <a href="mailto:admin@dhillon-interactive.com"><i class="fas fa-chevron-right"></i> Support</a>
+              <a href="mailto:admin@dhillon-interactive.com"><i class="fas fa-chevron-right"></i> admin@dhillon-interactive.com</a>
+            </nav>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="wrap">
+        <p class="footer-copy">
+          &copy; 2026
+          <a href="https://dhillon-interactive.com" target="_blank" rel="noopener noreferrer">Dhillon Interactive</a>.
+          All rights reserved. Registered in Haryana, India.
+        </p>
+        <nav class="footer-legal" aria-label="Legal links">
+          <a href="#" class="privacy-trigger" role="button">Privacy Policy</a>
+          <a href="mailto:admin@dhillon-interactive.com">Terms of Use</a>
+          <a href="mailto:admin@dhillon-interactive.com">Support</a>
+        </nav>
+      </div>
+    </div>
+
+  </footer>
+
+
+  <!-- ══════════════════════════════════════════
+       PRIVACY POLICY MODAL
+  ══════════════════════════════════════════ -->
+  <div class="modal-overlay" id="privacyModal"
+    role="dialog" aria-modal="true"
+    aria-labelledby="mHeadTitle" aria-describedby="mHeadSub">
+
+    <div class="modal-box" id="modalBox">
+
+      <div class="modal-head">
+        <div class="modal-head-left">
+          <div class="modal-head-ico" aria-hidden="true"><i class="fas fa-shield-halved"></i></div>
+          <div>
+            <div class="modal-head-title" id="mHeadTitle">Privacy Policy</div>
+            <div class="modal-head-sub"   id="mHeadSub">Dhillon Interactive &mdash; Effective 1 January 2026</div>
+          </div>
+        </div>
+        <button class="modal-close-x" id="modalCloseX" aria-label="Close Privacy Policy">
+          <i class="fas fa-xmark" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <div class="modal-scroll" id="modalScroll">
+
+        <div class="pmb">
+          <span class="pmb-item"><i class="fas fa-calendar"></i> Effective: 1 Jan 2026</span>
+          <span class="pmb-item"><i class="fas fa-building"></i> Dhillon Interactive</span>
+          <span class="pmb-item"><i class="fas fa-map-pin"></i> Haryana, India</span>
+          <span class="pmb-item"><i class="fas fa-rotate"></i> Version 1.0</span>
+        </div>
+
+        <!-- Section 1 -->
+        <div class="pol-blk">
+          <h3><span class="ph-ico"><i class="fas fa-circle-info"></i></span> 1. Introduction</h3>
+          <p>This Privacy Policy describes how <strong>Dhillon Interactive</strong> ("we", "us", or "our") — registered at Village Babroli, Block Jatusana, City Kosli, District Rewari, Pincode 123401, Haryana, India — handles information in connection with our mobile and PC games, applications, and related services (the "Services").</p>
+          <p>By accessing or using our Services you acknowledge that you have read, understood, and agree to the practices described herein.</p>
+          <div class="pol-success">
+            <p>✅ <strong>Short version:</strong> We do <strong>not</strong> collect, store, or sell your personal information directly. Our games are designed to function without requiring account creation or personal details.</p>
+          </div>
+        </div>
+        <div class="pol-div"></div>
+
+        <!-- Section 2 -->
+        <div class="pol-blk">
+          <h3><span class="ph-ico"><i class="fas fa-database"></i></span> 2. Information We Collect</h3>
+          <p>Dhillon Interactive does <strong>not</strong> directly collect personally identifiable information (PII) from users. Specifically:</p>
+          <ul>
+            <li>We do <strong>not</strong> require account registration to play our games.</li>
+            <li>We do <strong>not</strong> collect your name, email, phone number, or postal address through our games.</li>
+            <li>We do <strong>not</strong> collect financial or payment information.</li>
+            <li>We do <strong>not</strong> collect biometric data or government identification numbers.</li>
+            <li>We do <strong>not</strong> track your precise real-time GPS location.</li>
+          </ul>
+          <p style="margin-top:10px;">However, certain third-party SDKs integrated into our Services may collect non-personally identifiable technical information automatically. See Section 4 for details.</p>
+        </div>
+        <div class="pol-div"></div>
+
+        <!-- Section 3 -->
+        <div class="pol-blk">
+          <h3><span class="ph-ico"><i class="fas fa-cogs"></i></span> 3. Automatically Collected Technical Data</h3>
+          <p>When you use our Services, certain technical data may be collected automatically:</p>
+          <ul>
+            <li><strong>Device information:</strong> Device model, OS version, unique device identifiers (e.g., Android Advertising ID), screen resolution, and hardware specs.</li>
+            <li><strong>Usage data:</strong> Session duration, game levels accessed, in-game events, crash reports, and performance metrics.</li>
+            <li><strong>Network information:</strong> General IP address region (country/city level only — not precise location), network type.</li>
+            <li><strong>App diagnostics:</strong> Error logs, crash data, and ANR reports to help us improve stability.</li>
+          </ul>
+          <div class="pol-callout">
+            <p>🔒 This data is collected in <strong>aggregate and anonymised form</strong> and cannot be used to personally identify you.</p>
+          </div>
+        </div>
+        <div class="pol-div"></div>
+
+        <!-- Section 4 -->
+        <div class="pol-blk">
+          <h3><span class="ph-ico"><i class="fas fa-chart-bar"></i></span> 4. Third-Party Analytics &amp; Advertising</h3>
+          <p>Our games may incorporate third-party SDKs for analytics and advertising. These operate under their own privacy policies:</p>
+          <ul>
+            <li><strong>Google Analytics for Firebase / Google Play Services:</strong> Used to understand player interactions. Policy: <em style="color:var(--cobalt);">policies.google.com/privacy</em></li>
+            <li><strong>Google AdMob (if applicable):</strong> May serve personalised or non-personalised ads. You can opt out via your device's advertising settings. Policy: <em style="color:var(--cobalt);">policies.google.com/privacy</em></li>
+            <li><strong>Unity Analytics / Unity Ads (if applicable):</strong> Used for crash reporting, engagement analytics, and ad delivery. Policy: <em style="color:var(--cobalt);">unity.com/legal/privacy-policy</em></li>
+          </ul>
+          <p>We select partners who comply with GDPR, CCPA, and COPPA where applicable.</p>
+        </div>
+        <div class="pol-div"></div>
+
+        <!-- Section 5 -->
+        <div class="pol-blk">
+          <h3><span class="ph-ico"><i class="fas fa-child"></i></span> 5. Children's Privacy (COPPA)</h3>
+          <p>Our games are not directed at children under the age of <strong>13 years</strong> (or the applicable minimum age in your jurisdiction).</p>
+          <ul>
+            <li>We do not knowingly collect personal information from children under 13.</li>
+            <li>If we become aware that a child under 13 has submitted personal data, we will promptly delete it.</li>
+            <li>Games suitable for younger audiences are designed with limited or no data collection and no behavioural advertising.</li>
+          </ul>
+          <p>If you are a parent or guardian and believe your child has provided personal information, contact us immediately at <strong style="color:var(--cobalt);">admin@dhillon-interactive.com</strong>.</p>
+        </div>
+        <div class="pol-div"></div>
+
+        <!-- Section 6 -->
+        <div class="pol-blk">
+          <h3><span class="ph-ico"><i class="fas fa-share-nodes"></i></span> 6. How We Use Collected Information</h3>
+          <p>Limited non-personal technical data is used solely for:</p>
+          <ul>
+            <li>Maintaining, operating, and improving the performance and stability of our games.</li>
+            <li>Understanding aggregate player behaviour and improving game design.</li>
+            <li>Diagnosing technical issues, crashes, and bugs.</li>
+            <li>Delivering contextually relevant advertisements via third-party ad SDKs.</li>
+            <li>Complying with applicable legal obligations.</li>
+          </ul>
+          <p>We do <strong>not</strong> sell, trade, or rent any user data to third parties for their own marketing purposes.</p>
+        </div>
+        <div class="pol-div"></div>
+
+        <!-- Section 7 -->
+        <div class="pol-blk">
+          <h3><span class="ph-ico"><i class="fas fa-user-shield"></i></span> 7. Your Privacy Rights</h3>
+          <ul>
+            <li><strong>Right to Access:</strong> Request information about data collected about you.</li>
+            <li><strong>Right to Deletion:</strong> Request deletion of your personal data.</li>
+            <li><strong>Right to Opt-Out:</strong> Opt out of personalised advertising via device settings ("Opt out of Ads Personalisation" on Android).</li>
+            <li><strong>GDPR Rights (EU/EEA):</strong> Right to rectification, portability, restriction of processing, and to lodge a complaint with a supervisory authority.</li>
+            <li><strong>CCPA Rights (California):</strong> Right to know, right to delete, and right to opt-out of sale of personal information (we do not sell personal information).</li>
+          </ul>
+          <p>To exercise any rights contact: <strong style="color:var(--cobalt);">admin@dhillon-interactive.com</strong></p>
+        </div>
+        <div class="pol-div"></div>
+
+        <!-- Section 8 -->
+        <div class="pol-blk">
+          <h3><span class="ph-ico"><i class="fas fa-lock"></i></span> 8. Data Security</h3>
+          <p>We implement industry-standard technical and organisational measures to protect data against unauthorised access, disclosure, alteration, or destruction. No electronic transmission or storage method is 100% secure.</p>
+        </div>
+        <div class="pol-div"></div>
+
+        <!-- Section 9 -->
+        <div class="pol-blk">
+          <h3><span class="ph-ico"><i class="fas fa-link"></i></span> 9. Third-Party Links</h3>
+          <p>Our games and website may link to third-party services (e.g., Google Play Store). This Privacy Policy applies only to our own Services. We encourage you to review third-party privacy policies independently.</p>
+        </div>
+        <div class="pol-div"></div>
+
+        <!-- Section 10 -->
+        <div class="pol-blk">
+          <h3><span class="ph-ico"><i class="fas fa-arrows-rotate"></i></span> 10. Changes to This Policy</h3>
+          <p>When we make material changes, we will:</p>
+          <ul>
+            <li>Update the "Effective Date" at the top of this policy.</li>
+            <li>Post the revised policy at <em style="color:var(--cobalt);">dhillon-interactive.com</em>.</li>
+            <li>Provide an in-app notice for significant changes where feasible.</li>
+          </ul>
+          <p>Continued use of our Services after the effective date constitutes acceptance of the revised policy.</p>
+        </div>
+        <div class="pol-div"></div>
+
+        <!-- Section 11 -->
+        <div class="pol-blk">
+          <h3><span class="ph-ico"><i class="fas fa-envelope"></i></span> 11. Contact Us</h3>
+          <ul>
+            <li><strong>Studio:</strong> Dhillon Interactive</li>
+            <li><strong>Email:</strong> admin@dhillon-interactive.com</li>
+            <li><strong>Address:</strong> Village Babroli, Block Jatusana, City Kosli, District Rewari, Pincode 123401, Haryana, India</li>
+            <li><strong>Website:</strong> https://dhillon-interactive.com</li>
+          </ul>
+          <p>We will respond within <strong>30 days</strong> of receipt.</p>
+        </div>
+        <div class="pol-div"></div>
+
+        <div class="pol-blk">
+          <div class="pol-callout">
+            <p>🛡️ This policy is designed to comply with <strong>Google Play Developer Program Policies</strong>, <strong>GDPR</strong>, <strong>CCPA</strong>, and <strong>COPPA</strong>.</p>
+          </div>
+        </div>
+
+      </div>
+      <!-- /modal-scroll -->
+
+      <div class="modal-foot">
+        <p><i class="fas fa-shield-halved"></i> Last updated: 1 January 2026 &bull; Dhillon Interactive</p>
+        <button class="btn-close-modal" id="modalCloseFtr" aria-label="Close Privacy Policy">
+          Close Policy
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       TOAST
+  ══════════════════════════════════════════ -->
+  <div class="toast" id="toastEl" role="status" aria-live="polite" aria-atomic="true">
+    <div class="toast-ico" aria-hidden="true"><i class="fas fa-circle-check"></i></div>
+    <div>
+      <div class="toast-title" id="toastTitle">Done!</div>
+      <div class="toast-msg"   id="toastMsg">Action completed.</div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       SCROLL TO TOP
+  ══════════════════════════════════════════ -->
+  <button class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </button>
+
+
+  <!-- ══════════════════════════════════════════
+       JAVASCRIPT
+  ══════════════════════════════════════════ -->
+  <script>
+  'use strict';
+
+  /* ── HELPERS ───────────────────────────────── */
+  const $  = (s, c = document) => c.querySelector(s);
+  const 
+$$
+= (s, c = document) => [...c.querySelectorAll(s)];
+
+  /* ── MARQUEE (no document.write) ───────────── */
+  const marqueeItems = [
+    'Indie Game Development','PC & Mobile Publishing',
+    'Medieval Strategy','Solo Studio','Haryana, India',
+    'Google Play','Turn-Based Combat','Tech Solutions',
+    'Privacy First','Land Battle — Coming 2026','Dhillon Interactive'
+  ];
+  const track = $('#marqueeTrack');
+  if (track) {
+    let html = '';
+    /* duplicate for seamless loop */
+    for (let pass = 0; pass < 2; pass++) {
+      marqueeItems.forEach(item => {
+        html += `<span class="marquee-item"><span class="marquee-dot"></span>${item}</span>`;
+      });
+    }
+    track.innerHTML = html;
+  }
+
+  /* ── NAVBAR SCROLL ─────────────────────────── */
+  const navbar      = $('#navbar');
+  const scrollTopBtn = $('#scrollTopBtn');
+
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    navbar.classList.toggle('scrolled', y > 30);
+    scrollTopBtn.classList.toggle('show', y > 500);
+    highlightNav();
+  }, { passive: true });
+
+  /* ── ACTIVE NAV LINK ───────────────────────── */
+  const sections =
+$$
+('section[id]');
+
+  function highlightNav() {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 110) current = s.id;
+    });
+    
+$$
+('.nav-lnk[href^="#"]').forEach(a => {
+      a.classList.toggle('nav-active', a.getAttribute('href') === `#${current}`);
+    });
+  }
+
+  /* ── SMOOTH SCROLL ─────────────────────────── */
+$$
+('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+      if (this.classList.contains('privacy-trigger')) return;
+      const href = this.getAttribute('href');
+      if (!href || href === '#' || href === '#!') { e.preventDefault(); return; }
+      const target = document.querySelector(href);
+      if (!target) return;
+      e.preventDefault();
+      const top = target.getBoundingClientRect().top + window.scrollY - navbar.offsetHeight - 16;
+      window.scrollTo({ top, behavior: 'smooth' });
+      /* close mobile drawer if open */
+      if (isMenuOpen) closeDrawer();
+    });
+  });
+
+  /* ── HAMBURGER / MOBILE DRAWER ─────────────── */
+  const hamburgerBtn = $('#hamburgerBtn');
+  const mobileDrawer = $('#mobileDrawer');
+  let   isMenuOpen   = false;
+
+  function openDrawer() {
+    isMenuOpen = true;
+    hamburgerBtn.classList.add('open');
+    hamburgerBtn.setAttribute('aria-expanded', 'true');
+    mobileDrawer.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(() => mobileDrawer.classList.add('open'));
+  }
+
+  function closeDrawer() {
+    isMenuOpen = false;
+    hamburgerBtn.classList.remove('open');
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
+    mobileDrawer.classList.remove('open');
+    document.body.style.overflow = '';
+    mobileDrawer.addEventListener('transitionend', () => {
+      if (!isMenuOpen) mobileDrawer.style.display = 'none';
+    }, { once: true });
+  }
+
+  hamburgerBtn.addEventListener('click', () => isMenuOpen ? closeDrawer() : openDrawer());
+
+  /* close drawer on non-privacy links */
+  
+$$
+('.dl').forEach(link => {
+    if (!link.classList.contains('privacy-trigger')) {
+      link.addEventListener('click', closeDrawer);
+    }
+  });
+
+  /* ── PRIVACY MODAL ─────────────────────────── */
+  const modalOverlay = $('#privacyModal');
+  const modalCloseX  = $('#modalCloseX');
+  const modalCloseFtr= $('#modalCloseFtr');
+  let   isModalOpen  = false;
+  let   lastFocus;
+
+  function getFocusables() {
+    return
+$$
+('button,a[href],input,select,textarea,[tabindex]:not([tabindex="-1"])', modalOverlay)
+      .filter(el => !el.disabled && el.offsetParent !== null);
+  }
+
+  function openModal() {
+    lastFocus   = document.activeElement;
+    isModalOpen = true;
+    modalOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    if (isMenuOpen) closeDrawer();
+    /* reset scroll to top */
+    const ms = $('#modalScroll');
+    if (ms) ms.scrollTop = 0;
+    requestAnimationFrame(() => {
+      const f = getFocusables();
+      if (f.length) f[0].focus();
+    });
+  }
+
+  function closeModal() {
+    isModalOpen = false;
+    modalOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+    if (lastFocus) lastFocus.focus();
+  }
+
+  
+$$
+('.privacy-trigger').forEach(t =>
+    t.addEventListener('click', e => { e.preventDefault(); openModal(); })
+  );
+
+  modalCloseX.addEventListener('click',    closeModal);
+  modalCloseFtr.addEventListener('click',  closeModal);
+  modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
+
+  /* keyboard: escape + focus-trap */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      if (isModalOpen) { closeModal(); return; }
+      if (isMenuOpen)  { closeDrawer(); return; }
+    }
+    if (e.key === 'Tab' && isModalOpen) {
+      const f = getFocusables();
+      if (!f.length) { e.preventDefault(); return; }
+      if (e.shiftKey) {
+        if (document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
+      } else {
+        if (document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+      }
+    }
+  });
+
+  /* ── TOAST ─────────────────────────────────── */
+  const toastEl    = $('#toastEl');
+  const toastTitle = $('#toastTitle');
+  const toastMsg   = $('#toastMsg');
+  let   toastTimer;
+
+  window.showToast = function(title = 'Done!', msg = '', dur = 3800) {
+    clearTimeout(toastTimer);
+    toastTitle.textContent = title;
+    toastMsg.textContent   = msg;
+    toastEl.classList.add('show');
+    toastTimer = setTimeout(() => toastEl.classList.remove('show'), dur);
+  };
+
+  /* ── CONTACT FORM ──────────────────────────── */
+  $('#contactForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const first   = $('#firstName').value.trim();
+    const last    = $('#lastName').value.trim();
+    const email   = $('#emailAddr').value.trim();
+    const subject = $('#subject').value.trim();
+    const message = $('#message').value.trim();
+
+    if (!first || !last)
+      return showToast('⚠️ Missing name',  'Please enter your first and last name.');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+      return showToast('⚠️ Invalid email', 'Please enter a valid email address.');
+    if (!subject)
+      return showToast('⚠️ No subject',    'Please add a subject line.');
+    if (message.length < 10)
+      return showToast('⚠️ Too short',     'Please write a slightly longer message.');
+
+    window.location.href =
+      `mailto:admin@dhillon-interactive.com` +
+      `?subject=${encodeURIComponent('[Website] ' + subject)}` +
+      `&body=${encodeURIComponent(`Name: ${first} ${last}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+
+    showToast('✅ Opening email client…', 'Your draft is ready to send!');
+    e.target.reset();
+  });
+
+  /* ── SCROLL TO TOP ─────────────────────────── */
+  scrollTopBtn.addEventListener('click', () =>
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  );
+
+  /* ── INTERSECTION OBSERVER — REVEAL ────────── */
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('on'), i * 85);
+        revealObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
+$$
+('.reveal, .reveal-l, .reveal-r').forEach(el => revealObs.observe(el));
+
+  /* ── PROGRESS BARS ─────────────────────────── */
+  const progObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        setTimeout(() => { el.style.width = el.dataset.w || '0%'; }, 350);
+        progObs.unobserve(el);
+      }
+    });
+  }, { threshold: 0.4 });
+
+  
+$$
+('[data-w]').forEach(el => progObs.observe(el));
+
+  /* ── 3D TILT on cards ──────────────────────── */
+$$
+('.gmc, .hero-float-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r  = card.getBoundingClientRect();
+      const rx = ((e.clientY - r.top)  - r.height / 2) / 28;
+      const ry = (r.width / 2 - (e.clientX - r.left)) / 28;
+      card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-5px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transition = 'transform .5s ease';
+      card.style.transform  = '';
+      setTimeout(() => card.style.transition = '', 550);
+    });
+  });
+
+  /* ── CONSOLE BRAND ─────────────────────────── */
+  console.log('%c🎮 Dhillon Interactive','color:#1a3fca;font-size:20px;font-weight:900;');
+  console.log('%cCrafting Immersive Digital Experiences','color:#6b7280;font-size:13px;');
+  console.log('%c🌐 https://dhillon-interactive.com','color:#4f72f0;font-size:12px;');
+
+  </script>
+
+</body>
+</html>
