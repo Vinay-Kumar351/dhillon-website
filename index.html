@@ -2852,7 +2852,14 @@ $$
 
   /* ── INIT ──────────────────────────────────── */
   onScroll();
-
+window.addEventListener('DOMContentLoaded', () => {
+    if (window.location.hash === '#privacy') {
+      // Thoda delay taaki preloader hat jaye
+      setTimeout(() => {
+        openModal();
+      }, 1000);
+    }
+  });
   /* ── CONSOLE BRAND ─────────────────────────── */
   console.log('%c🎮 Dhillon Interactive','color:#1a3fca;font-size:20px;font-weight:900;');
   console.log('%cCrafting Immersive Digital Experiences','color:#6b7280;font-size:13px;');
