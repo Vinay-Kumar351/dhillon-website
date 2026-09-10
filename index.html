@@ -1105,200 +1105,138 @@
     .footer-legal a { font-size:.79rem; color:rgba(255,255,255,.28); transition:color var(--tf); }
     .footer-legal a:hover { color:rgba(255,255,255,.72); }
 
-      <!-- ══════════════════════════════════════════
+    /* ══════════════════════════════════════════
        PRIVACY POLICY MODAL
-  ══════════════════════════════════════════ -->
-  <div class="modal-overlay" id="privacyModal"
-    role="dialog" aria-modal="true"
-    aria-labelledby="mHeadTitle" aria-describedby="mHeadSub">
-    <div class="modal-box" id="modalBox">
-      <div class="modal-head">
-        <div class="modal-head-left">
-          <div class="modal-head-ico" aria-hidden="true"><i class="fas fa-shield-halved"></i></div>
-          <div>
-            <div class="modal-head-title" id="mHeadTitle">Privacy Policy</div>
-            <div class="modal-head-sub" id="mHeadSub">Dhillon Interactive &mdash; Effective 11 September 2026</div>
-          </div>
-        </div>
-        <button class="modal-close-x" id="modalCloseX" aria-label="Close Privacy Policy">
-          <i class="fas fa-xmark" aria-hidden="true"></i>
-        </button>
-      </div>
-      <div class="modal-scroll" id="modalScroll">
-        <div class="pmb">
-          <span class="pmb-item"><i class="fas fa-calendar"></i> Effective: 11 Sep 2026</span>
-          <span class="pmb-item"><i class="fas fa-building"></i> Dhillon Interactive</span>
-          <span class="pmb-item"><i class="fas fa-map-pin"></i> Haryana, India</span>
-          <span class="pmb-item"><i class="fas fa-rotate"></i> Version 1.1</span>
-        </div>
+    ══════════════════════════════════════════ */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(11,17,32,.62);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+      opacity: 0; visibility: hidden;
+      transition: opacity var(--tm) var(--ease), visibility var(--tm);
+    }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
 
-        <div class="pol-blk">
-          <h3><span class="ph-ico"><i class="fas fa-circle-info"></i></span> 1. Introduction</h3>
-          <p>This Privacy Policy describes how <strong>Dhillon Interactive</strong> ("we", "us", or "our") — registered at Village Babroli, Block Jatusana, City Kosli, District Rewari, Pincode 123401, Haryana, India — handles information in connection with our mobile and PC games, applications, and related services (the "Services").</p>
-          <p>By accessing or using our Services you acknowledge that you have read, understood, and agree to the practices described herein.</p>
-          <div class="pol-success">
-            <p>✅ <strong>Short version:</strong> We never sell your data. Most of our games collect nothing personal at all. Where a game offers an optional online feature — such as a global leaderboard — it may store a nickname you choose and your country, and you can delete that at any time. No game requires an account or your real name.</p>
-          </div>
-        </div>
-        <div class="pol-div"></div>
+    .modal-box {
+      background: var(--bg-white);
+      border-radius: var(--r-xl);
+      width: 100%; max-width: 780px; max-height: 88vh;
+      display: flex; flex-direction: column;
+      box-shadow: var(--sh-xl);
+      overflow: hidden;
+      transform: translateY(18px) scale(.98);
+      transition: transform var(--tm) var(--spring);
+    }
+    .modal-overlay.active .modal-box { transform: translateY(0) scale(1); }
 
-        <div class="pol-blk">
-          <h3><span class="ph-ico"><i class="fas fa-database"></i></span> 2. Information We Collect</h3>
-          <p>Dhillon Interactive collects as little information as possible. Most of our games collect no personally identifiable information (PII) at all. The one exception is the optional online leaderboard described in Section 5. Specifically:</p>
-          <ul>
-            <li>We do <strong>not</strong> require account registration to play our games.</li>
-            <li>We do <strong>not</strong> collect your real name, email, phone number, or postal address through our games.</li>
-            <li>We do <strong>not</strong> collect financial or payment information.</li>
-            <li>We do <strong>not</strong> collect biometric data or government identification numbers.</li>
-            <li>We do <strong>not</strong> track your precise real-time GPS location.</li>
-            <li>Your game progress, high scores, settings and any events or reminders you create are stored <strong>locally on your device</strong> and are not transmitted to our servers.</li>
-            <li>Where a game offers an optional online leaderboard, we store a <strong>nickname you choose yourself</strong> and your country, as described in Section 5. This is optional — the game is fully playable without it.</li>
-          </ul>
-          <p style="margin-top:10px;">In addition, certain third-party SDKs integrated into our Services may collect non-personally identifiable technical information automatically. See Section 4 for details.</p>
-        </div>
-        <div class="pol-div"></div>
+    .modal-head {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; padding: 22px 28px;
+      background: linear-gradient(135deg, var(--cobalt-deep) 0%, var(--cobalt) 55%, var(--cobalt-light) 100%);
+      flex-shrink: 0;
+    }
+    .modal-head-left { display: flex; align-items: center; gap: 14px; }
+    .modal-head-ico {
+      width: 44px; height: 44px; border-radius: var(--r);
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.2);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 1.05rem; flex-shrink: 0;
+    }
+    .modal-head-title {
+      font-family: var(--ff-disp);
+      font-size: 1.25rem; font-weight: 800;
+      color: #fff; line-height: 1.15; letter-spacing: -.02em;
+    }
+    .modal-head-sub { font-size: .78rem; color: rgba(255,255,255,.72); margin-top: 2px; }
+    .modal-close-x {
+      width: 38px; height: 38px; border-radius: var(--r-sm);
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.18);
+      color: #fff; font-size: .95rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: all var(--tm) var(--ease); flex-shrink: 0;
+    }
+    .modal-close-x:hover { background: rgba(255,255,255,.24); transform: rotate(90deg); }
 
-        <div class="pol-blk">
-          <h3><span class="ph-ico"><i class="fas fa-cogs"></i></span> 3. Automatically Collected Technical Data</h3>
-          <p>When you use our Services, certain technical data may be collected automatically:</p>
-          <ul>
-            <li><strong>Device information:</strong> Device model, OS version, unique device identifiers (e.g., Android Advertising ID), screen resolution, and hardware specs.</li>
-            <li><strong>Usage data:</strong> Session duration, game levels accessed, in-app events, crash reports, and performance metrics.</li>
-            <li><strong>Network information:</strong> General IP address region (country/city level only — not precise location), network type.</li>
-            <li><strong>App diagnostics:</strong> Error logs, crash data, and ANR reports to help us improve stability.</li>
-          </ul>
-          <div class="pol-callout">
-            <p>🔒 This data is collected in <strong>aggregate and anonymised form</strong> and cannot be used to personally identify you.</p>
-          </div>
-        </div>
-        <div class="pol-div"></div>
+    .modal-scroll { padding: 28px; overflow-y: auto; flex: 1; }
 
-        <div class="pol-blk">
-          <h3><span class="ph-ico"><i class="fas fa-chart-bar"></i></span> 4. Third-Party Analytics &amp; Advertising</h3>
-        <p>Our games may incorporate third-party SDKs for analytics and advertising. These operate under their own privacy policies:</p>
-        <ul>
-          <li><strong>Google Analytics for Firebase / Google Play Services:</strong> Used to understand player interactions. Policy: <em style="color:var(--cobalt);">policies.google.com/privacy</em></li>
-          <li><strong>Google AdMob (if applicable):</strong> Our app uses Google AdMob to display advertisements. Google AdMob automatically collects your device's Advertising ID and IP address to serve relevant ads. You can reset or opt-out of personalized ads using your Android device's Google settings. Policy: <em style="color:var(--cobalt);">policies.google.com/privacy</em></li>
-          <li><strong>Unity Analytics / Unity Ads (if applicable):</strong> Used for crash reporting, engagement analytics, and ad delivery. Policy: <em style="color:var(--cobalt);">unity.com/legal/privacy-policy</em></li>
-        </ul>
-        <p>We select partners who comply with GDPR, CCPA, and COPPA where applicable.</p>
-        </div>
-        <div class="pol-div"></div>
+    .pmb { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .pmb-item {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: .72rem; font-weight: 600;
+      color: var(--cobalt); background: var(--cobalt-pale);
+      border: 1px solid var(--cobalt-pale2);
+      padding: 5px 11px; border-radius: var(--r-pill);
+    }
+    .pmb-item i { font-size: .66rem; opacity: .8; }
 
-        <div class="pol-blk">
-          <h3><span class="ph-ico"><i class="fas fa-trophy"></i></span> 5. Optional Online Leaderboards</h3>
-          <p>Some of our games — such as <strong>Classic 50 Offline Games</strong> — offer an optional global leaderboard. The games themselves are fully playable offline; the leaderboard is the only part that uses a network connection.</p>
-          <div class="pol-success">
-            <p>✅ <strong>This feature is optional.</strong> You are asked once whether you would like to join, you may decline, and every game works exactly the same either way. Nothing is sent to our servers until you choose a name.</p>
-          </div>
-          <p style="margin-top:10px;"><strong>What is stored when you join:</strong></p>
-          <ul>
-            <li><strong>A nickname you choose</strong> — 3 to 12 characters. This is not your real name, and we never ask for one. It is shown publicly next to your scores.</li>
-            <li><strong>A two-letter country code</strong> — read from your device's region setting (for example <em>IN</em>, <em>US</em>). This is not GPS or precise location, and we cannot verify it.</li>
-            <li><strong>An anonymous player identifier</strong> — a random ID generated by Firebase Authentication. It is not linked to a Google account, an email address, or your device's advertising ID.</li>
-            <li><strong>Your best score in each game</strong> you have played.</li>
-          </ul>
-          <p><strong>Why:</strong> solely to display the leaderboard inside the game. This data is never used for advertising, never shared with our advertising partners, and never sold.</p>
-          <p><strong>Who processes it:</strong> Google Firebase (Cloud Firestore, Firebase Authentication and Cloud Functions), acting as our data processor. Leaderboard data is stored on Google servers in <strong>Mumbai, India (asia-south1)</strong>. Policy: <em style="color:var(--cobalt);">policies.google.com/privacy</em></p>
-          <p><strong>Nicknames are filtered.</strong> Offensive names are rejected automatically, and we may remove or reset a name that breaches this rule.</p>
-          <p><strong>How long we keep it:</strong> until you delete it. We do not automatically erase leaderboard entries, so that long-standing records are not lost.</p>
-          <div class="pol-callout">
-            <p>🗑️ <strong>How to delete it:</strong> open the game's <strong>Settings → Leaderboard → Delete my leaderboard data</strong>. This permanently removes your nickname, your country and every score you have submitted from our servers. You can also email <strong style="color:var(--cobalt);">admin@dhillon-interactive.com</strong> and we will do it for you. Scores saved on your own device are not affected, and you may join again at any time.</p>
-          </div>
-        </div>
-        <div class="pol-div"></div>
+    .pol-blk h3 {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--ff-head);
+      font-size: 1rem; font-weight: 700;
+      color: var(--tx-head); margin-bottom: 12px;
+      letter-spacing: -.01em;
+    }
+    .ph-ico {
+      width: 30px; height: 30px; border-radius: 8px;
+      background: linear-gradient(135deg, var(--cobalt), var(--cobalt-xl));
+      color: #fff; font-size: .72rem; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 3px 10px rgba(26,63,202,.28);
+    }
+    .pol-blk p { font-size: .86rem; color: var(--tx-body); line-height: 1.8; }
+    .pol-blk p + p { margin-top: 10px; }
+    .pol-blk ul { display: flex; flex-direction: column; gap: 8px; margin: 10px 0; }
+    .pol-blk li {
+      position: relative; padding-left: 20px;
+      font-size: .85rem; color: var(--tx-body); line-height: 1.75;
+    }
+    .pol-blk li::before {
+      content: ''; position: absolute; left: 6px; top: 11px;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--cobalt-xl);
+    }
+    .pol-blk strong { color: var(--tx-head); font-weight: 700; }
 
-        <div class="pol-blk">
-          <h3><span class="ph-ico"><i class="fas fa-child"></i></span> 6. Children's Privacy (COPPA)</h3>
-          <p>Our games are not directed at children under the age of <strong>13 years</strong> (or the applicable minimum age in your jurisdiction).</p>
-          <ul>
-            <li>We do not knowingly collect personal information from children under 13.</li>
-            <li>If we become aware that a child under 13 has submitted personal data, we will promptly delete it.</li>
-            <li>Games suitable for younger audiences are designed with limited or no data collection and no behavioural advertising.</li>
-            <li>Data from the optional leaderboard (Section 5) is never used for advertising or ad targeting, for players of any age.</li>
-          </ul>
-          <p>If you are a parent or guardian and believe your child has provided personal information, contact us immediately at <strong style="color:var(--cobalt);">admin@dhillon-interactive.com</strong>.</p>
-        </div>
-        <div class="pol-div"></div>
+    .pol-success {
+      background: var(--em-pale); border: 1.5px solid #a7f3d0;
+      border-radius: var(--r); padding: 14px 16px; margin-top: 14px;
+    }
+    .pol-success p { color: #065f46; }
+    .pol-success strong { color: #064e3b; }
 
-        <div class="pol-blk">
-          <h3><span class="ph-ico"><i class="fas fa-share-nodes"></i></span> 7. How We Use Collected Information</h3>
-          <p>The limited information we hold is used solely for:</p>
-          <ul>
-            <li>Maintaining, operating, and improving the performance and stability of our games.</li>
-            <li>Understanding aggregate player behaviour and improving game design.</li>
-            <li>Diagnosing technical issues, crashes, and bugs.</li>
-            <li>Displaying the optional leaderboard described in Section 5.</li>
-            <li>Delivering contextually relevant advertisements via third-party ad SDKs.</li>
-            <li>Triggering any alarms, reminders or notifications you have set yourself within an app.</li>
-            <li>Complying with applicable legal obligations.</li>
-          </ul>
-          <p>We do <strong>not</strong> sell, trade, or rent any user data to third parties for their own marketing purposes.</p>
-        </div>
-        <div class="pol-div"></div>
+    .pol-callout {
+      background: var(--cobalt-pale); border: 1.5px solid var(--cobalt-pale2);
+      border-radius: var(--r); padding: 14px 16px; margin-top: 14px;
+    }
+    .pol-callout p { color: var(--cobalt-deep); }
+    .pol-callout strong { color: var(--cobalt-deep); }
 
-        <div class="pol-blk">
-          <h3><span class="ph-ico"><i class="fas fa-user-shield"></i></span> 8. Your Privacy Rights</h3>
-          <ul>
-            <li><strong>Right to Access:</strong> Request information about data collected about you.</li>
-            <li><strong>Right to Deletion:</strong> Request deletion of your personal data. Leaderboard data can be deleted instantly from inside the game (<strong>Settings → Leaderboard → Delete my leaderboard data</strong>), or by emailing us.</li>
-            <li><strong>Right to Opt-Out:</strong> Opt out of personalised advertising via device settings ("Opt out of Ads Personalisation" on Android). The optional leaderboard can be declined, or left at any time by deleting your data.</li>
-            <li><strong>GDPR Rights (EU/EEA):</strong> Right to rectification, portability, restriction of processing, and to lodge a complaint with a supervisory authority.</li>
-            <li><strong>CCPA Rights (California):</strong> Right to know, right to delete, and right to opt-out of sale of personal information (we do not sell personal information).</li>
-          </ul>
-          <p>To exercise any rights contact: <strong style="color:var(--cobalt);">admin@dhillon-interactive.com</strong></p>
-        </div>
-        <div class="pol-div"></div>
+    .pol-div { height: 1px; background: var(--border); margin: 24px 0; }
 
-        <div class="pol-blk">
-          <h3><span class="ph-ico"><i class="fas fa-lock"></i></span> 9. Data Security</h3>
-          <p>We implement industry-standard technical and organisational measures to protect data against unauthorised access, disclosure, alteration, or destruction. All data sent to our servers travels over encrypted connections (HTTPS/TLS). No electronic transmission or storage method is 100% secure.</p>
-        </div>
-        <div class="pol-div"></div>
-
-        <div class="pol-blk">
-          <h3><span class="ph-ico"><i class="fas fa-link"></i></span> 10. Third-Party Links</h3>
-          <p>Our games and website may link to third-party services (e.g., Google Play Store). This Privacy Policy applies only to our own Services. We encourage you to review third-party privacy policies independently.</p>
-        </div>
-        <div class="pol-div"></div>
-
-        <div class="pol-blk">
-          <h3><span class="ph-ico"><i class="fas fa-arrows-rotate"></i></span> 11. Changes to This Policy</h3>
-          <p>When we make material changes, we will:</p>
-          <ul>
-            <li>Update the "Effective Date" at the top of this policy.</li>
-            <li>Post the revised policy at <em style="color:var(--cobalt);">dhillon-interactive.com</em>.</li>
-            <li>Provide an in-app notice for significant changes where feasible.</li>
-          </ul>
-          <p>Continued use of our Services after the effective date constitutes acceptance of the revised policy.</p>
-        </div>
-        <div class="pol-div"></div>
-
-        <div class="pol-blk">
-          <h3><span class="ph-ico"><i class="fas fa-envelope"></i></span> 12. Contact Us</h3>
-          <ul>
-            <li><strong>Studio:</strong> Dhillon Interactive</li>
-            <li><strong>Email:</strong> admin@dhillon-interactive.com</li>
-            <li><strong>Address:</strong> Village Babroli, Block Jatusana, City Kosli, District Rewari, Pincode 123401, Haryana, India</li>
-            <li><strong>Website:</strong> https://dhillon-interactive.com</li>
-          </ul>
-          <p>We will respond within <strong>30 days</strong> of receipt.</p>
-        </div>
-        <div class="pol-div"></div>
-
-        <div class="pol-blk">
-          <div class="pol-callout">
-            <p>🛡️ This policy is designed to comply with <strong>Google Play Developer Program Policies</strong>, <strong>GDPR</strong>, <strong>CCPA</strong>, and <strong>COPPA</strong>.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal-foot">
-        <p><i class="fas fa-shield-halved"></i> Last updated: 11 September 2026 &bull; Dhillon Interactive</p>
-        <button class="btn-close-modal" id="modalCloseFtr" aria-label="Close Privacy Policy">Close Policy</button>
-      </div>
-    </div>
-  </div>
+    .modal-foot {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 14px; padding: 16px 28px; flex-wrap: wrap; flex-shrink: 0;
+      border-top: 1.5px solid var(--border);
+      background: var(--bg-soft);
+    }
+    .modal-foot p {
+      font-size: .76rem; color: var(--tx-muted);
+      display: flex; align-items: center; gap: 7px;
+    }
+    .btn-close-modal {
+      background: linear-gradient(135deg, var(--cobalt), var(--cobalt-light));
+      color: #fff; font-size: .84rem; font-weight: 600;
+      padding: 10px 22px; border-radius: var(--r);
+      box-shadow: var(--sh-cob);
+      transition: all var(--tm) var(--ease);
+    }
+    .btn-close-modal:hover { transform: translateY(-2px); box-shadow: var(--sh-cob-lg); }
+     
     /* ══════════════════════════════════════════
        TOAST
     ══════════════════════════════════════════ */
@@ -2279,7 +2217,7 @@
     </div>
   </footer>
 
-  <!-- ══════════════════════════════════════════
+   <!-- ══════════════════════════════════════════
        PRIVACY POLICY MODAL
   ══════════════════════════════════════════ -->
   <div class="modal-overlay" id="privacyModal"
@@ -2291,7 +2229,7 @@
           <div class="modal-head-ico" aria-hidden="true"><i class="fas fa-shield-halved"></i></div>
           <div>
             <div class="modal-head-title" id="mHeadTitle">Privacy Policy</div>
-            <div class="modal-head-sub" id="mHeadSub">Dhillon Interactive &mdash; Effective 1 January 2026</div>
+            <div class="modal-head-sub" id="mHeadSub">Dhillon Interactive &mdash; Effective 11 September 2026</div>
           </div>
         </div>
         <button class="modal-close-x" id="modalCloseX" aria-label="Close Privacy Policy">
@@ -2300,10 +2238,10 @@
       </div>
       <div class="modal-scroll" id="modalScroll">
         <div class="pmb">
-          <span class="pmb-item"><i class="fas fa-calendar"></i> Effective: 1 Jan 2026</span>
+          <span class="pmb-item"><i class="fas fa-calendar"></i> Effective: 11 Sep 2026</span>
           <span class="pmb-item"><i class="fas fa-building"></i> Dhillon Interactive</span>
           <span class="pmb-item"><i class="fas fa-map-pin"></i> Haryana, India</span>
-          <span class="pmb-item"><i class="fas fa-rotate"></i> Version 1.0</span>
+          <span class="pmb-item"><i class="fas fa-rotate"></i> Version 1.1</span>
         </div>
 
         <div class="pol-blk">
@@ -2311,23 +2249,24 @@
           <p>This Privacy Policy describes how <strong>Dhillon Interactive</strong> ("we", "us", or "our") — registered at Village Babroli, Block Jatusana, City Kosli, District Rewari, Pincode 123401, Haryana, India — handles information in connection with our mobile and PC games, applications, and related services (the "Services").</p>
           <p>By accessing or using our Services you acknowledge that you have read, understood, and agree to the practices described herein.</p>
           <div class="pol-success">
-            <p>✅ <strong>Short version:</strong> We do <strong>not</strong> collect, store, or sell your personal information directly. Our games and apps are designed to function without requiring account creation or personal details.</p>
+            <p>✅ <strong>Short version:</strong> We never sell your data. Most of our games collect nothing personal at all. Where a game offers an optional online feature — such as a global leaderboard — it may store a nickname you choose and your country, and you can delete that at any time. No game requires an account or your real name.</p>
           </div>
         </div>
         <div class="pol-div"></div>
 
         <div class="pol-blk">
           <h3><span class="ph-ico"><i class="fas fa-database"></i></span> 2. Information We Collect</h3>
-          <p>Dhillon Interactive does <strong>not</strong> directly collect personally identifiable information (PII) from users. Specifically:</p>
+          <p>Dhillon Interactive collects as little information as possible. Most of our games collect no personally identifiable information (PII) at all. The one exception is the optional online leaderboard described in Section 5. Specifically:</p>
           <ul>
             <li>We do <strong>not</strong> require account registration to play our games.</li>
-            <li>We do <strong>not</strong> collect your name, email, phone number, or postal address through our games.</li>
+            <li>We do <strong>not</strong> collect your real name, email, phone number, or postal address through our games.</li>
             <li>We do <strong>not</strong> collect financial or payment information.</li>
             <li>We do <strong>not</strong> collect biometric data or government identification numbers.</li>
             <li>We do <strong>not</strong> track your precise real-time GPS location.</li>
-            <li>Any events or alarms you create within the app are stored locally on your device and are not transmitted to our servers.</li>
+            <li>Your game progress, high scores, settings and any events or reminders you create are stored <strong>locally on your device</strong> and are not transmitted to our servers.</li>
+            <li>Where a game offers an optional online leaderboard, we store a <strong>nickname you choose yourself</strong> and your country, as described in Section 5. This is optional — the game is fully playable without it.</li>
           </ul>
-          <p style="margin-top:10px;">However, certain third-party SDKs integrated into our Services may collect non-personally identifiable technical information automatically. See Section 4 for details.</p>
+          <p style="margin-top:10px;">In addition, certain third-party SDKs integrated into our Services may collect non-personally identifiable technical information automatically. See Section 4 for details.</p>
         </div>
         <div class="pol-div"></div>
 
@@ -2359,38 +2298,63 @@
         <div class="pol-div"></div>
 
         <div class="pol-blk">
-          <h3><span class="ph-ico"><i class="fas fa-child"></i></span> 5. Children's Privacy (COPPA)</h3>
+          <h3><span class="ph-ico"><i class="fas fa-trophy"></i></span> 5. Optional Online Leaderboards</h3>
+          <p>Some of our games — such as <strong>Classic 50 Offline Games</strong> — offer an optional global leaderboard. The games themselves are fully playable offline; the leaderboard is the only part that uses a network connection.</p>
+          <div class="pol-success">
+            <p>✅ <strong>This feature is optional.</strong> You are asked once whether you would like to join, you may decline, and every game works exactly the same either way. Nothing is sent to our servers until you choose a name.</p>
+          </div>
+          <p style="margin-top:10px;"><strong>What is stored when you join:</strong></p>
+          <ul>
+            <li><strong>A nickname you choose</strong> — 3 to 12 characters. This is not your real name, and we never ask for one. It is shown publicly next to your scores.</li>
+            <li><strong>A two-letter country code</strong> — read from your device's region setting (for example <em>IN</em>, <em>US</em>). This is not GPS or precise location, and we cannot verify it.</li>
+            <li><strong>An anonymous player identifier</strong> — a random ID generated by Firebase Authentication. It is not linked to a Google account, an email address, or your device's advertising ID.</li>
+            <li><strong>Your best score in each game</strong> you have played.</li>
+          </ul>
+          <p><strong>Why:</strong> solely to display the leaderboard inside the game. This data is never used for advertising, never shared with our advertising partners, and never sold.</p>
+          <p><strong>Who processes it:</strong> Google Firebase (Cloud Firestore, Firebase Authentication and Cloud Functions), acting as our data processor. Leaderboard data is stored on Google servers in <strong>Mumbai, India (asia-south1)</strong>. Policy: <em style="color:var(--cobalt);">policies.google.com/privacy</em></p>
+          <p><strong>Nicknames are filtered.</strong> Offensive names are rejected automatically, and we may remove or reset a name that breaches this rule.</p>
+          <p><strong>How long we keep it:</strong> until you delete it. We do not automatically erase leaderboard entries, so that long-standing records are not lost.</p>
+          <div class="pol-callout">
+            <p>🗑️ <strong>How to delete it:</strong> open the game's <strong>Settings → Leaderboard → Delete my leaderboard data</strong>. This permanently removes your nickname, your country and every score you have submitted from our servers. You can also email <strong style="color:var(--cobalt);">admin@dhillon-interactive.com</strong> and we will do it for you. Scores saved on your own device are not affected, and you may join again at any time.</p>
+          </div>
+        </div>
+        <div class="pol-div"></div>
+
+        <div class="pol-blk">
+          <h3><span class="ph-ico"><i class="fas fa-child"></i></span> 6. Children's Privacy (COPPA)</h3>
           <p>Our games are not directed at children under the age of <strong>13 years</strong> (or the applicable minimum age in your jurisdiction).</p>
           <ul>
             <li>We do not knowingly collect personal information from children under 13.</li>
             <li>If we become aware that a child under 13 has submitted personal data, we will promptly delete it.</li>
             <li>Games suitable for younger audiences are designed with limited or no data collection and no behavioural advertising.</li>
+            <li>Data from the optional leaderboard (Section 5) is never used for advertising or ad targeting, for players of any age.</li>
           </ul>
           <p>If you are a parent or guardian and believe your child has provided personal information, contact us immediately at <strong style="color:var(--cobalt);">admin@dhillon-interactive.com</strong>.</p>
         </div>
         <div class="pol-div"></div>
 
         <div class="pol-blk">
-          <h3><span class="ph-ico"><i class="fas fa-share-nodes"></i></span> 6. How We Use Collected Information</h3>
-          <p>Limited non-personal technical data is used solely for:</p>
+          <h3><span class="ph-ico"><i class="fas fa-share-nodes"></i></span> 7. How We Use Collected Information</h3>
+          <p>The limited information we hold is used solely for:</p>
           <ul>
             <li>Maintaining, operating, and improving the performance and stability of our games.</li>
             <li>Understanding aggregate player behaviour and improving game design.</li>
             <li>Diagnosing technical issues, crashes, and bugs.</li>
+            <li>Displaying the optional leaderboard described in Section 5.</li>
             <li>Delivering contextually relevant advertisements via third-party ad SDKs.</li>
+            <li>Triggering any alarms, reminders or notifications you have set yourself within an app.</li>
             <li>Complying with applicable legal obligations.</li>
-            <li>Technical data is used for: ... ensuring the accurate triggering of user-set alarms and notifications.</li>
           </ul>
           <p>We do <strong>not</strong> sell, trade, or rent any user data to third parties for their own marketing purposes.</p>
         </div>
         <div class="pol-div"></div>
 
         <div class="pol-blk">
-          <h3><span class="ph-ico"><i class="fas fa-user-shield"></i></span> 7. Your Privacy Rights</h3>
+          <h3><span class="ph-ico"><i class="fas fa-user-shield"></i></span> 8. Your Privacy Rights</h3>
           <ul>
             <li><strong>Right to Access:</strong> Request information about data collected about you.</li>
-            <li><strong>Right to Deletion:</strong> Request deletion of your personal data.</li>
-            <li><strong>Right to Opt-Out:</strong> Opt out of personalised advertising via device settings ("Opt out of Ads Personalisation" on Android).</li>
+            <li><strong>Right to Deletion:</strong> Request deletion of your personal data. Leaderboard data can be deleted instantly from inside the game (<strong>Settings → Leaderboard → Delete my leaderboard data</strong>), or by emailing us.</li>
+            <li><strong>Right to Opt-Out:</strong> Opt out of personalised advertising via device settings ("Opt out of Ads Personalisation" on Android). The optional leaderboard can be declined, or left at any time by deleting your data.</li>
             <li><strong>GDPR Rights (EU/EEA):</strong> Right to rectification, portability, restriction of processing, and to lodge a complaint with a supervisory authority.</li>
             <li><strong>CCPA Rights (California):</strong> Right to know, right to delete, and right to opt-out of sale of personal information (we do not sell personal information).</li>
           </ul>
@@ -2399,19 +2363,19 @@
         <div class="pol-div"></div>
 
         <div class="pol-blk">
-          <h3><span class="ph-ico"><i class="fas fa-lock"></i></span> 8. Data Security</h3>
-          <p>We implement industry-standard technical and organisational measures to protect data against unauthorised access, disclosure, alteration, or destruction. No electronic transmission or storage method is 100% secure.</p>
+          <h3><span class="ph-ico"><i class="fas fa-lock"></i></span> 9. Data Security</h3>
+          <p>We implement industry-standard technical and organisational measures to protect data against unauthorised access, disclosure, alteration, or destruction. All data sent to our servers travels over encrypted connections (HTTPS/TLS). No electronic transmission or storage method is 100% secure.</p>
         </div>
         <div class="pol-div"></div>
 
         <div class="pol-blk">
-          <h3><span class="ph-ico"><i class="fas fa-link"></i></span> 9. Third-Party Links</h3>
+          <h3><span class="ph-ico"><i class="fas fa-link"></i></span> 10. Third-Party Links</h3>
           <p>Our games and website may link to third-party services (e.g., Google Play Store). This Privacy Policy applies only to our own Services. We encourage you to review third-party privacy policies independently.</p>
         </div>
         <div class="pol-div"></div>
 
         <div class="pol-blk">
-          <h3><span class="ph-ico"><i class="fas fa-arrows-rotate"></i></span> 10. Changes to This Policy</h3>
+          <h3><span class="ph-ico"><i class="fas fa-arrows-rotate"></i></span> 11. Changes to This Policy</h3>
           <p>When we make material changes, we will:</p>
           <ul>
             <li>Update the "Effective Date" at the top of this policy.</li>
@@ -2423,7 +2387,7 @@
         <div class="pol-div"></div>
 
         <div class="pol-blk">
-          <h3><span class="ph-ico"><i class="fas fa-envelope"></i></span> 11. Contact Us</h3>
+          <h3><span class="ph-ico"><i class="fas fa-envelope"></i></span> 12. Contact Us</h3>
           <ul>
             <li><strong>Studio:</strong> Dhillon Interactive</li>
             <li><strong>Email:</strong> admin@dhillon-interactive.com</li>
@@ -2442,12 +2406,11 @@
       </div>
 
       <div class="modal-foot">
-        <p><i class="fas fa-shield-halved"></i> Last updated: 1 January 2026 &bull; Dhillon Interactive</p>
+        <p><i class="fas fa-shield-halved"></i> Last updated: 11 September 2026 &bull; Dhillon Interactive</p>
         <button class="btn-close-modal" id="modalCloseFtr" aria-label="Close Privacy Policy">Close Policy</button>
       </div>
     </div>
   </div>
-
   <!-- ══════════════════════════════════════════
        TOAST
   ══════════════════════════════════════════ -->
